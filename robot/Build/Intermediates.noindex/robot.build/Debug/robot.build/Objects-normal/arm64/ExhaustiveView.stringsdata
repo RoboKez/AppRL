@@ -1,0 +1,84 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/ExhaustiveView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Image will show when exhaused"
+      },
+      {
+        "comment": "",
+        "key": "Exhaustive Search (...within given precision)"
+      },
+      {
+        "comment": "",
+        "key": "Home"
+      },
+      {
+        "comment": "",
+        "key": "Min P:\t %f"
+      },
+      {
+        "comment": "",
+        "key": "Enter your Minimum Proportial Gain"
+      },
+      {
+        "comment": "",
+        "key": "Max P:\t %f"
+      },
+      {
+        "comment": "",
+        "key": "Enter your Maximum Proportial Gain"
+      },
+      {
+        "comment": "",
+        "key": "Min I:\t %f"
+      },
+      {
+        "comment": "",
+        "key": "Enter your Minimum Intergral Gain"
+      },
+      {
+        "comment": "",
+        "key": "Max I:\t %f"
+      },
+      {
+        "comment": "",
+        "key": "Enter your Maximum Intergral Gain"
+      },
+      {
+        "comment": "",
+        "key": "Grid search dims %lld x %lld"
+      },
+      {
+        "comment": "",
+        "key": "Enter your Grid dimentions"
+      },
+      {
+        "comment": "",
+        "key": "Brute Force"
+      },
+      {
+        "comment": "",
+        "key": "P:\t %f"
+      },
+      {
+        "comment": "",
+        "key": "P"
+      },
+      {
+        "comment": "",
+        "key": "I:\t %f"
+      },
+      {
+        "comment": "",
+        "key": "I"
+      },
+      {
+        "comment": "",
+        "key": "Show Policy for bute force found P I"
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,52 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/ManView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Manual Control"
+      },
+      {
+        "comment": "",
+        "key": "Home"
+      },
+      {
+        "comment": "",
+        "key": "Stop"
+      },
+      {
+        "comment": "",
+        "key": "Forward"
+      },
+      {
+        "comment": "",
+        "key": "Zero"
+      },
+      {
+        "comment": "",
+        "key": "Back"
+      },
+      {
+        "comment": "",
+        "key": "Left"
+      },
+      {
+        "comment": "",
+        "key": "Right"
+      },
+      {
+        "comment": "",
+        "key": "Test"
+      },
+      {
+        "comment": "",
+        "key": "refresh port search"
+      },
+      {
+        "comment": "",
+        "key": "Connect"
+      }
+    ]
+  },
+  "version": 1
+}

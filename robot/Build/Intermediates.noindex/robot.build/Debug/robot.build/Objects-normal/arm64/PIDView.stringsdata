@@ -1,0 +1,72 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/PIDView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Real PID Tuner"
+      },
+      {
+        "comment": "",
+        "key": "Simulation PID Tuner"
+      },
+      {
+        "comment": "",
+        "key": "Inverter"
+      },
+      {
+        "comment": "",
+        "key": "Pitch only"
+      },
+      {
+        "comment": "",
+        "key": "Home"
+      },
+      {
+        "comment": "",
+        "key": "Stop"
+      },
+      {
+        "comment": "",
+        "key": "Test"
+      },
+      {
+        "comment": "",
+        "key": "Default Values"
+      },
+      {
+        "comment": "",
+        "key": "Target"
+      },
+      {
+        "comment": "",
+        "key": "%f"
+      },
+      {
+        "comment": "",
+        "key": "KP"
+      },
+      {
+        "comment": "",
+        "key": "KI"
+      },
+      {
+        "comment": "",
+        "key": "KD"
+      },
+      {
+        "comment": "",
+        "key": "Interger Limit"
+      },
+      {
+        "comment": "",
+        "key": "refresh port search"
+      },
+      {
+        "comment": "",
+        "key": "Connect"
+      }
+    ]
+  },
+  "version": 1
+}

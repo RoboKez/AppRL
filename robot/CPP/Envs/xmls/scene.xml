@@ -1,0 +1,88 @@
+<!-- Copyright 2021 DeepMind Technologies Limited
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<mujoco>
+  <compiler meshdir="" texturedir=""/>
+  <statistic extent="1.5" meansize=".05"/>
+  <option timestep="0.005" jacobian="sparse"/>
+
+  <visual>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <quality shadowsize="4096"/>
+    <map stiffness="700" shadowscale="0.5" fogstart="10" fogend="15" zfar="40" haze="0.3"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" builtin="gradient" rgb1="0.1 0.1 0.2" rgb2="0.0 0.0 0.0" width="512" height="512"/>
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .4 .4" rgb2=".4 0.6 0.6"
+      width="512" height="512" mark="cross" markrgb="8 .8 .8"/>
+    
+    <texture name="texgoal" type="2d" builtin="checker" rgb1="0 0 0" rgb2="1 1 1"
+      width="512" height="512" mark="cross" markrgb="8 .8 .8"/>
+      
+      <texture name="texcarpet" type="2d" file="carpet.png"/>
+      <texture name="texsponge" type="2d" file="sponge.png"/>
+      <texture name="texmarble" type="cube" file="marble.png"/>
+
+      <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true"/>
+      <material name="matgoal" reflectance="0.3" texture="texgoal" texrepeat="10 10" texuniform="true"/>
+      <material name="matcarpet" texture="texcarpet"/>
+      <material name="matsponge" texture="texsponge" specular="0.3"/>
+      <material name="matmarble" texture="texmarble" rgba=".7 .7 .7 1"/>
+      
+      <mesh name="wheel" file="wheel2.stl" scale="0.001 0.001 0.001"/>
+      <mesh name="arrow" file="arrow.stl" scale="0.005 0.005 0.005"/>
+  </asset>
+  
+  <default>
+      <joint limited="false" damping="1" armature="0"/>
+      <motor ctrlrange="-1. 1." ctrllimited="true"/>
+
+      <default class="bearing">
+          <joint pos="0 0 0" limited="false" damping="0.01" armature="0.01" type="hinge" axis="0 1 0"/>
+          <geom pos="0 0 0" conaffinity="0" rgba="1 0 1 0.7" friction="0 0 0"/>
+      </default>
+      
+<!--      <default class="controlled_joint">-->
+<!--          <motor ctrllimited="true" ctrlrange="-1 1"/>-->
+<!--          <joint type="hinge" axis="0 0 1"/>-->
+<!--      </default>-->
+
+      <default class="target_slider">
+          <joint armature="10000" damping="10000" limited="true" pos="0 0 0" range="-1000 1000" ref=".1" stiffness="0" type="slide"/>
+          <geom conaffinity="0" pos="0 0 0" rgba=" 1 0 1 0.5" size="0.005" type="sphere"/>
+      </default>
+  </default>
+
+  <worldbody>
+    
+      
+    <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="0 0 5.0" dir="0 0 -1" castshadow="false"/>
+    <light directional="true" diffuse=".6 .6 .6" specular="0.2 0.2 0.2" pos="0 0 4" dir="0 0 -1"/>
+    <geom contype="1" name="floor" pos="0 0 0" size="0 0 .25" type="plane" material="matplane" condim="6" solimp="0 0.95 0.001 0.5 2" solref="0.02 1" margin="0"/>
+<!--    <geom name="ground" type="plane" size="0 0 1" pos="0 0 0" quat="1 0 0 0" material="matcarpet" condim="1"/>-->
+<!--    <body mocap="true" pos="0 .0 2">-->
+<!--      <geom type="capsule" size=".1 .1" material="matmarble" group="1" condim="1"/>-->
+<!--    </body>-->
+<!--    <body mocap="true" pos="0 0 1">-->
+<!--      <geom type="sphere" size=".2" condim="1" material="matgoal"/>-->
+<!--   </body>-->
+    
+    <body mocap="true" pos="0 0 2">
+    <geom euler="-90 0 0" type="mesh" conaffinity="0" contype="0" mesh="arrow" rgba="0 1 0 0.8" />
+<!--      <geom type="capsule" size=".1 .1" conaffinity="0" contype="0" material="matgoal"/>-->-->
+   </body>
+  </worldbody>
+</mujoco>

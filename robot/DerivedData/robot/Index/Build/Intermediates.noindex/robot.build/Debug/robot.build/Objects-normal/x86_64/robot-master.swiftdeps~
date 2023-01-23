@@ -1,0 +1,23 @@
+version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
+options: "8c64fee976db9c51462445c0ab5b12c2c2e9115a09fd3e2d008d39c298c50849"
+build_start_time: [1674509821, 460415840]
+build_end_time: [1674509822, 596149921]
+inputs:
+  "/Users/kezbook/Desktop/robot/robot/Views/BarView.swift": !dirty [1654013134, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/ChartView.swift": !dirty [1674185013, 528662443]
+  "/Users/kezbook/Desktop/robot/robot/Views/ExhaustiveView.swift": !dirty [1674184658, 510815620]
+  "/Users/kezbook/Desktop/robot/robot/Views/ExperimentView.swift": !dirty [1673384504, 450000047]
+  "/Users/kezbook/Desktop/robot/robot/Views/GraphView.swift": !dirty [1658130840, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/HomeView.swift": !dirty [1671008616, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/ManView.swift": !dirty [1663079652, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/MocapView.swift": !dirty [1658830722, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/NetworkView.swift": !dirty [1670031850, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/NewView.swift": !dirty [1673432788, 679999828]
+  "/Users/kezbook/Desktop/robot/robot/Views/PIDView.swift": !dirty [1674192398, 798317432]
+  "/Users/kezbook/Desktop/robot/robot/Views/ParamView.swift": !dirty [1652435670, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/PixelView.swift": !dirty [1674185605, 73635816]
+  "/Users/kezbook/Desktop/robot/robot/Views/ProbeView.swift": !dirty [1669842290, 0]
+  "/Users/kezbook/Desktop/robot/robot/Views/RL.swift": !dirty [1674325865, 846989631]
+  "/Users/kezbook/Desktop/robot/robot/Views/RunningView.swift": !dirty [1674193392, 148591518]
+  "/Users/kezbook/Desktop/robot/robot/Views/TrimView.swift": !dirty [1672140306, 0]
+  "/Users/kezbook/Desktop/robot/robot/robotApp.swift": !dirty [1671008616, 0]

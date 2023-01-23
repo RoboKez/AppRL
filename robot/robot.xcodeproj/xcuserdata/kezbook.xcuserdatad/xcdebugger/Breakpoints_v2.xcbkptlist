@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "EF681E60-F16F-43AD-A239-4C613AA18015"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "81C4AE25-244E-4866-AD00-CB849F06C761"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CPP/Envs/EnvHCartPole.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "CartPoleEnvH::MarkovStep(agent_act)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B456EAE4-9CD2-4AF3-9074-E475016467AF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CPP/Envs/Env.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "RealEnv::RealEnv(name, stepLimit, portName)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5425644D-33DD-4F36-B9B2-C62260B63285"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CPP/Bridge.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "991"
+            endingLineNumber = "991"
+            landmarkName = "getNewPolicyProbe(save_, o1, o2)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "5425644D-33DD-4F36-B9B2-C62260B63285 - 175d083748e90c64"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "getNewPolicyProbe"
+                  moduleName = "robot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kezbook/Desktop/robot/CPP/Bridge.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "992"
+                  endingLineNumber = "992"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "5425644D-33DD-4F36-B9B2-C62260B63285 - 175d083748e90c64"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "getNewPolicyProbe"
+                  moduleName = "robot"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kezbook/Desktop/robot/CPP/Bridge.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "992"
+                  endingLineNumber = "992"
+                  offsetFromSymbolStart = "196">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

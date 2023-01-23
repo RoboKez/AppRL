@@ -1,0 +1,41 @@
+<mujoco model="CartPole Basic">
+  <include file="scene.xml"/>
+  <option timestep="0.002" jacobian="dense"/>
+  <size nconmax="100" njmax="300" nstack="50000"/>
+
+  <worldbody>
+    <body name="torso" pos="0 0 1">
+        <camera name="trackhorizontal" mode="trackcom" pos="0 -3 0.3" xyaxes="1 0 0 0 0 1"/>
+        <joint type="slide" axis="1 0 0" name="cart" damping="10" armature="0.1" limited="false" range="-5 5"/>
+        <geom type="box" size="0.15 0.015 0.015"/>
+        <body name="lwaist" pos="0 -0.05 0">
+            <joint class="bearing" pos="0 0 0" axis="0 1 0" name="pole" limited="false" range="-45 45"/>
+           <geom class="bearing" pos="0 0 0.2" size="0.01 0.2" type="capsule" rgba="1 1 1 0.7" />
+            <body name="ball" pos="0 0 0.4">
+                <joint class="target_slider" axis="1 0 0" name="target_x"/>
+                <geom class="target_slider" name="target" size="0.02" rgba="1. 0. 0.0 0.7"/>
+                <site name="target_sensor_zone" rgba="1. 0. 0.0 0.7" size="0.01" type="sphere"/>
+                
+            </body>
+       </body>
+    </body>
+  </worldbody>
+  
+  <actuator>
+      <motor name="motor1" gear="40" joint="cart" />
+<!--     -40 -->
+  </actuator>
+
+  <sensor>
+      <jointpos joint="pole" noise="0"/>
+      <jointvel joint="pole" noise="0"/>
+      <jointvel joint="cart" noise="0"/>
+      <jointpos joint="cart" noise="0"/>
+  </sensor>
+  
+</mujoco>
+
+<default class="target_slider">
+    <joint armature="10000" damping="10000" limited="true" pos="0 0 0" range="-1000 1000" ref=".1" stiffness="0" type="slide"/>
+    <geom conaffinity="0" pos="0 0 0" rgba=" 1 0 1 0.5" size="0.005" type="sphere"/>
+</default>

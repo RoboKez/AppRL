@@ -1,0 +1,76 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/NewView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Tune you're parameters and click begin!"
+      },
+      {
+        "comment": "",
+        "key": "Adam optimiser"
+      },
+      {
+        "comment": "",
+        "key": "Required e.g. <myExperiment>"
+      },
+      {
+        "comment": "",
+        "key": "Learning Rate %@"
+      },
+      {
+        "comment": "",
+        "key": "Seed %@"
+      },
+      {
+        "comment": "",
+        "key": "1st Hidden Layer %@"
+      },
+      {
+        "comment": "",
+        "key": "2nd Hidden Layer %@"
+      },
+      {
+        "comment": "",
+        "key": "Epochs %@"
+      },
+      {
+        "comment": "",
+        "key": "Minibatch size %@"
+      },
+      {
+        "comment": "",
+        "key": "Iteration sample size %@"
+      },
+      {
+        "comment": "",
+        "key": "Env Step Limit %@"
+      },
+      {
+        "comment": "",
+        "key": "Environment"
+      },
+      {
+        "comment": "",
+        "key": "Name"
+      },
+      {
+        "comment": "",
+        "key": "Scrap experiment"
+      },
+      {
+        "comment": "",
+        "key": "Please enter a valid name between 0 to 20 non special characters"
+      },
+      {
+        "comment": "",
+        "key": "AutoName"
+      },
+      {
+        "comment": "",
+        "key": "Begin"
+      }
+    ]
+  },
+  "version": 1
+}

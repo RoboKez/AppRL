@@ -1,0 +1,36 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/ChartView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Select data for comparison"
+      },
+      {
+        "comment": "",
+        "key": "Edit Title"
+      },
+      {
+        "comment": "",
+        "key": "d2:"
+      },
+      {
+        "comment": "",
+        "key": "None"
+      },
+      {
+        "comment": "",
+        "key": "d3:"
+      },
+      {
+        "comment": "",
+        "key": "d4:"
+      },
+      {
+        "comment": "",
+        "key": "d5:"
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,24 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/NetworkView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Probe Policy and Value Networks"
+      },
+      {
+        "comment": "",
+        "key": "Home"
+      },
+      {
+        "comment": "",
+        "key": "Iteration %@"
+      },
+      {
+        "comment": "",
+        "key": "Update"
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,65 @@
+<!--./simulate ../../../Desktop/phd/bambi/kez_algos/pytorch_imps/good/bl1/assets/bl1.xml-->
+<mujoco model="hover1">
+    <include file="scene.xml"/>
+    <compiler angle="degree" inertiafromgeom="true" coordinate="local"/>
+    <option integrator="RK4" iterations="50" solver="PGS" timestep="0.01"/>
+    <size nkey="5" nuser_geom="1"/>
+
+    <default>
+
+        <default class="controlled_joint">
+            <motor gear="30" ctrllimited="true" ctrlrange="-1 1"/>
+            <joint armature="0.02" damping="5" pos="0 0 0" limited="false" type="hinge" axis="0 0 1"/>
+            <geom conaffinity="1" condim="1" contype="1" margin="0.001" material="geom" pos="0 0 0" type="mesh" rgba="1 0 0 1"/>
+		</default>
+
+    </default>
+
+    <asset>
+        <texture builtin="flat" height="1278" mark="cross" markrgb="1 1 1" name="texgeom" random="0.01" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" type="cube" width="127"/>
+        <material name="geom" texture="texgeom" texuniform="true"/>
+    </asset>
+
+    <worldbody>
+
+        <body name="torso" pos="0 0 .135" euler="0 0 0">
+            <joint armature="0" damping="0" limited="false" name="root_1" pos="0 0 0" stiffness="0" type="free"/>
+            <geom name="aluminium_plate" pos="0 0 -0.005" size=".05 0.075 0.005" type="box" rgba="0 0 1 0.7"/>
+            <geom name="rod" pos="0 0 0.15" size=".01 .01 .15" type="box" rgba="0 0 1 0.7"/>
+
+            <body name = "FR_hip" pos="0. -0.09 -0.033" euler="-90 0 0">
+                <joint class="controlled_joint" name="dynamixel_1"/>
+                <geom class="controlled_joint" type="cylinder" size="0.1 0.01" rgba="0. 1. 1. 0.7"/>
+            </body>
+
+            <body name = "FL_hip" pos="0. 0.09 -0.033" euler="-90 180 0">
+                <joint class="controlled_joint" name="dynamixel_2"/>
+                <geom class="controlled_joint" type="cylinder" size="0.1 0.01" rgba="1. 0. 0. 0.7"/>
+            </body>
+
+        </body>
+
+    </worldbody>
+
+    <actuator>
+        <motor class="controlled_joint" joint="dynamixel_1" name="FR"/>
+        <motor class="controlled_joint" joint="dynamixel_2"  gear="-30" name="FL"/>
+    </actuator>
+
+    <sensor>
+        <actuatorpos actuator="FL" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="FR" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorvel actuator="FL" noise="0"/>
+        <actuatorvel actuator="FR" noise="0"/>
+        
+        
+        <gyro name="gyro" site="b0" noise="0" />
+        <framequat name="quatl" objname="torso" objtype="body" />
+        <framepos name="botpos" objname="bottom" objtype="geom" />
+        <framepos name="toppos" objname="top" objtype="geom" />
+    </sensor> -->
+
+</mujoco>
+
+
+

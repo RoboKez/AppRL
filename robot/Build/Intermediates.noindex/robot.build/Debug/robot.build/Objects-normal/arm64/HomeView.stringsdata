@@ -1,0 +1,68 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/HomeView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "-=AppRL_Bytes=-"
+      },
+      {
+        "comment": "",
+        "key": "Kez Smithson Whitehead"
+      },
+      {
+        "comment": "",
+        "key": "This app uses Deepmind's MuJoCo physics engine, see embeddedRL for the real world reinforcement learning version"
+      },
+      {
+        "comment": "",
+        "key": "Select"
+      },
+      {
+        "comment": "",
+        "key": "Select your Experiment..."
+      },
+      {
+        "comment": "",
+        "key": "Create new experiment"
+      },
+      {
+        "comment": "",
+        "key": "Delete"
+      },
+      {
+        "comment": "",
+        "key": "Delete Experiment..."
+      },
+      {
+        "comment": "",
+        "key": "Mocap"
+      },
+      {
+        "comment": "",
+        "key": "Select Experiment..."
+      },
+      {
+        "comment": "",
+        "key": "PID"
+      },
+      {
+        "comment": "",
+        "key": "Trim Data"
+      },
+      {
+        "comment": "",
+        "key": "Manual Control"
+      },
+      {
+        "comment": "",
+        "key": "Probe Networks"
+      },
+      {
+        "comment": "",
+        "key": "PI Exhastive Search"
+      }
+    ]
+  },
+  "version": 1
+}

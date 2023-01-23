@@ -1,0 +1,64 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/RunningView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Limit %@"
+      },
+      {
+        "comment": "",
+        "key": "Start State %@"
+      },
+      {
+        "comment": "",
+        "key": "Noise %@"
+      },
+      {
+        "comment": "",
+        "key": "MAAS %@"
+      },
+      {
+        "comment": "",
+        "key": "Decay %@"
+      },
+      {
+        "comment": "",
+        "key": "Anneal"
+      },
+      {
+        "comment": "",
+        "key": "Stop"
+      },
+      {
+        "comment": "",
+        "key": "refresh port search"
+      },
+      {
+        "comment": "",
+        "key": "Connect"
+      },
+      {
+        "comment": "",
+        "key": "Begin Training"
+      },
+      {
+        "comment": "",
+        "key": "Limited"
+      },
+      {
+        "comment": "",
+        "key": "Continue Training"
+      },
+      {
+        "comment": "",
+        "key": "Watch"
+      },
+      {
+        "comment": "",
+        "key": "Home"
+      }
+    ]
+  },
+  "version": 1
+}

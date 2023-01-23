@@ -1,0 +1,24 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/MocapView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Motion Capture"
+      },
+      {
+        "comment": "",
+        "key": "Home"
+      },
+      {
+        "comment": "",
+        "key": "Stop"
+      },
+      {
+        "comment": "",
+        "key": "Test"
+      }
+    ]
+  },
+  "version": 1
+}

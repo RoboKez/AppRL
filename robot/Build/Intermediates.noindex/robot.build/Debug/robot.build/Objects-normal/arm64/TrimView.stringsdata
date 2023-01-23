@@ -1,0 +1,24 @@
+{
+  "source": "/Users/kezbook/Desktop/robot/robot/Views/TrimView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Trim data"
+      },
+      {
+        "comment": "",
+        "key": "Home"
+      },
+      {
+        "comment": "",
+        "key": "Iteration %@"
+      },
+      {
+        "comment": "",
+        "key": "Trim Delete"
+      }
+    ]
+  },
+  "version": 1
+}

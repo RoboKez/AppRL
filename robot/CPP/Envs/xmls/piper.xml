@@ -1,0 +1,797 @@
+<mujoco model="Carrie">
+  <include file="scene.xml"/>
+  
+  <default>
+      <default class="controlled_joint">
+          <motor gear="30" ctrllimited="true" ctrlrange="-1 1"/>
+          <joint armature="0.02" damping="5" pos="0 0 0" limited="false" type="hinge" axis="0 0 1"/>
+          <geom conaffinity="1" condim="1" contype="1" margin="0.001" material="geom" pos="0 0 0" type="mesh" rgba="1 0 0 1"/>
+      </default>
+  </default>
+  
+  <asset>
+      <texture builtin="flat" height="1278" mark="cross" markrgb="1 1 1" name="texgeom" random="0.01" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" type="cube" width="127"/>
+      <material name="geom" texture="texgeom" texuniform="true"/>
+  </asset>
+  
+
+  <worldbody>
+      
+    <body name="torso" pos="0 0. 0.135">
+        <camera name="trackhorizontal" mode="trackcom" pos="0 -3 0.3" xyaxes="1 0 0 0 0 1"/>
+        <joint armature="0" damping="0" limited="false" name="root_1" pos="0 0 0" stiffness="0" type="free"/>
+
+<!--       <body name = "Left" pos="0. 0.2 0" euler="-180 0 0">-->
+<!--            <joint class="bearing" pos="0 0 0" axis="0 1 0" name="leftMotor" limited="false"/>-->
+<!--            <geom pos="0 0 0" type="mesh" mesh="wheel" rgba="0 1 0 1." />-->
+<!--        </body>-->
+<!--       -->
+<!--        <body name = "Right" pos="0. -0.2 0" euler="0 0 0">-->
+<!--            <joint class="bearing" pos="0 0 0" axis="0 1 0" name="rightMotor" limited="false"/>-->
+<!--            <geom pos="0 0 0" type="mesh" mesh="wheel" rgba="0 1 0 1."/>-->
+<!--        </body>-->
+        
+        <body name = "Right" pos="0. -0.09 -0.033" euler="-90 0 0">
+            <joint class="controlled_joint" name="rightMotor"/>
+            <geom class="controlled_joint" type="cylinder" size="0.1 0.01" rgba="0. 1. 1. 0.7"/>
+        </body>
+
+        <body name = "Left" pos="0. 0.09 -0.033" euler="-90 180 0">
+            <joint class="controlled_joint" name="leftMotor"/>
+            <geom class="controlled_joint" type="cylinder" size="0.1 0.01" rgba="1. 0. 0. 0.7"/>
+        </body>
+        
+        <geom name="bottom" pos="0 0 0" type="cylinder" size=".01.002" euler="0 0 0" rgba=".1 .0 .0 .7" />
+        <geom name="top" pos="0 0 0.1" type="cylinder" size=".01 .002" euler="0 0 0" rgba=".1 .0 .0 .7" />
+        <geom name="aluminium_plate" pos="0 0 -0.005" size=".05 0.075 0.005" type="box" rgba="0 0 1 0.7"/>
+        <geom name="rod" pos="0 0 0.15" size=".01 .01 .15" type="box" rgba="0 0 1 0.7"/>
+    </body>
+    
+    <body mocap="true" pos="0 .0 1">
+      <geom pos="0 0 1.5" euler="0 0 -90" type="mesh" conaffinity="0" mesh="arrow" rgba="0 0 1 0.5" />
+      <site name="b0" euler="90 -90 0" />
+      <site name="b1" euler="90 -89 0" />
+      <site name="b2" euler="90 -88 0" />
+      <site name="b3" euler="90 -87 0" />
+      <site name="b4" euler="90 -86 0" />
+      <site name="b5" euler="90 -85 0" />
+      <site name="b6" euler="90 -84 0" />
+      <site name="b7" euler="90 -83 0" />
+      <site name="b8" euler="90 -82 0" />
+      <site name="b9" euler="90 -81 0" />
+      <site name="b10" euler="90 -80 0" />
+      <site name="b11" euler="90 -79 0" />
+      <site name="b12" euler="90 -78 0" />
+      <site name="b13" euler="90 -77 0" />
+      <site name="b14" euler="90 -76 0" />
+      <site name="b15" euler="90 -75 0" />
+      <site name="b16" euler="90 -74 0" />
+      <site name="b17" euler="90 -73 0" />
+      <site name="b18" euler="90 -72 0" />
+      <site name="b19" euler="90 -71 0" />
+      <site name="b20" euler="90 -70 0" />
+      <site name="b21" euler="90 -69 0" />
+      <site name="b22" euler="90 -68 0" />
+      <site name="b23" euler="90 -67 0" />
+      <site name="b24" euler="90 -66 0" />
+      <site name="b25" euler="90 -65 0" />
+      <site name="b26" euler="90 -64 0" />
+      <site name="b27" euler="90 -63 0" />
+      <site name="b28" euler="90 -62 0" />
+      <site name="b29" euler="90 -61 0" />
+      <site name="b30" euler="90 -60 0" />
+      <site name="b31" euler="90 -59 0" />
+      <site name="b32" euler="90 -58 0" />
+      <site name="b33" euler="90 -57 0" />
+      <site name="b34" euler="90 -56 0" />
+      <site name="b35" euler="90 -55 0" />
+      <site name="b36" euler="90 -54 0" />
+      <site name="b37" euler="90 -53 0" />
+      <site name="b38" euler="90 -52 0" />
+      <site name="b39" euler="90 -51 0" />
+      <site name="b40" euler="90 -50 0" />
+      <site name="b41" euler="90 -49 0" />
+      <site name="b42" euler="90 -48 0" />
+      <site name="b43" euler="90 -47 0" />
+      <site name="b44" euler="90 -46 0" />
+      <site name="b45" euler="90 -45 0" />
+      <site name="b46" euler="90 -44 0" />
+      <site name="b47" euler="90 -43 0" />
+      <site name="b48" euler="90 -42 0" />
+      <site name="b49" euler="90 -41 0" />
+      <site name="b50" euler="90 -40 0" />
+      <site name="b51" euler="90 -39 0" />
+      <site name="b52" euler="90 -38 0" />
+      <site name="b53" euler="90 -37 0" />
+      <site name="b54" euler="90 -36 0" />
+      <site name="b55" euler="90 -35 0" />
+      <site name="b56" euler="90 -34 0" />
+      <site name="b57" euler="90 -33 0" />
+      <site name="b58" euler="90 -32 0" />
+      <site name="b59" euler="90 -31 0" />
+      <site name="b60" euler="90 -30 0" />
+      <site name="b61" euler="90 -29 0" />
+      <site name="b62" euler="90 -28 0" />
+      <site name="b63" euler="90 -27 0" />
+      <site name="b64" euler="90 -26 0" />
+      <site name="b65" euler="90 -25 0" />
+      <site name="b66" euler="90 -24 0" />
+      <site name="b67" euler="90 -23 0" />
+      <site name="b68" euler="90 -22 0" />
+      <site name="b69" euler="90 -21 0" />
+      <site name="b70" euler="90 -20 0" />
+      <site name="b71" euler="90 -19 0" />
+      <site name="b72" euler="90 -18 0" />
+      <site name="b73" euler="90 -17 0" />
+      <site name="b74" euler="90 -16 0" />
+      <site name="b75" euler="90 -15 0" />
+      <site name="b76" euler="90 -14 0" />
+      <site name="b77" euler="90 -13 0" />
+      <site name="b78" euler="90 -12 0" />
+      <site name="b79" euler="90 -11 0" />
+      <site name="b80" euler="90 -10 0" />
+      <site name="b81" euler="90 -9 0" />
+      <site name="b82" euler="90 -8 0" />
+      <site name="b83" euler="90 -7 0" />
+      <site name="b84" euler="90 -6 0" />
+      <site name="b85" euler="90 -5 0" />
+      <site name="b86" euler="90 -4 0" />
+      <site name="b87" euler="90 -3 0" />
+      <site name="b88" euler="90 -2 0" />
+      <site name="b89" euler="90 -1 0" />
+      <site name="b90" euler="90 0 0" />
+      <site name="b91" euler="90 1 0" />
+      <site name="b92" euler="90 2 0" />
+      <site name="b93" euler="90 3 0" />
+      <site name="b94" euler="90 4 0" />
+      <site name="b95" euler="90 5 0" />
+      <site name="b96" euler="90 6 0" />
+      <site name="b97" euler="90 7 0" />
+      <site name="b98" euler="90 8 0" />
+      <site name="b99" euler="90 9 0" />
+      <site name="b100" euler="90 10 0" />
+      <site name="b101" euler="90 11 0" />
+      <site name="b102" euler="90 12 0" />
+      <site name="b103" euler="90 13 0" />
+      <site name="b104" euler="90 14 0" />
+      <site name="b105" euler="90 15 0" />
+      <site name="b106" euler="90 16 0" />
+      <site name="b107" euler="90 17 0" />
+      <site name="b108" euler="90 18 0" />
+      <site name="b109" euler="90 19 0" />
+      <site name="b110" euler="90 20 0" />
+      <site name="b111" euler="90 21 0" />
+      <site name="b112" euler="90 22 0" />
+      <site name="b113" euler="90 23 0" />
+      <site name="b114" euler="90 24 0" />
+      <site name="b115" euler="90 25 0" />
+      <site name="b116" euler="90 26 0" />
+      <site name="b117" euler="90 27 0" />
+      <site name="b118" euler="90 28 0" />
+      <site name="b119" euler="90 29 0" />
+      <site name="b120" euler="90 30 0" />
+      <site name="b121" euler="90 31 0" />
+      <site name="b122" euler="90 32 0" />
+      <site name="b123" euler="90 33 0" />
+      <site name="b124" euler="90 34 0" />
+      <site name="b125" euler="90 35 0" />
+      <site name="b126" euler="90 36 0" />
+      <site name="b127" euler="90 37 0" />
+      <site name="b128" euler="90 38 0" />
+      <site name="b129" euler="90 39 0" />
+      <site name="b130" euler="90 40 0" />
+      <site name="b131" euler="90 41 0" />
+      <site name="b132" euler="90 42 0" />
+      <site name="b133" euler="90 43 0" />
+      <site name="b134" euler="90 44 0" />
+      <site name="b135" euler="90 45 0" />
+      <site name="b136" euler="90 46 0" />
+      <site name="b137" euler="90 47 0" />
+      <site name="b138" euler="90 48 0" />
+      <site name="b139" euler="90 49 0" />
+      <site name="b140" euler="90 50 0" />
+      <site name="b141" euler="90 51 0" />
+      <site name="b142" euler="90 52 0" />
+      <site name="b143" euler="90 53 0" />
+      <site name="b144" euler="90 54 0" />
+      <site name="b145" euler="90 55 0" />
+      <site name="b146" euler="90 56 0" />
+      <site name="b147" euler="90 57 0" />
+      <site name="b148" euler="90 58 0" />
+      <site name="b149" euler="90 59 0" />
+      <site name="b150" euler="90 60 0" />
+      <site name="b151" euler="90 61 0" />
+      <site name="b152" euler="90 62 0" />
+      <site name="b153" euler="90 63 0" />
+      <site name="b154" euler="90 64 0" />
+      <site name="b155" euler="90 65 0" />
+      <site name="b156" euler="90 66 0" />
+      <site name="b157" euler="90 67 0" />
+      <site name="b158" euler="90 68 0" />
+      <site name="b159" euler="90 69 0" />
+      <site name="b160" euler="90 70 0" />
+      <site name="b161" euler="90 71 0" />
+      <site name="b162" euler="90 72 0" />
+      <site name="b163" euler="90 73 0" />
+      <site name="b164" euler="90 74 0" />
+      <site name="b165" euler="90 75 0" />
+      <site name="b166" euler="90 76 0" />
+      <site name="b167" euler="90 77 0" />
+      <site name="b168" euler="90 78 0" />
+      <site name="b169" euler="90 79 0" />
+      <site name="b170" euler="90 80 0" />
+      <site name="b171" euler="90 81 0" />
+      <site name="b172" euler="90 82 0" />
+      <site name="b173" euler="90 83 0" />
+      <site name="b174" euler="90 84 0" />
+      <site name="b175" euler="90 85 0" />
+      <site name="b176" euler="90 86 0" />
+      <site name="b177" euler="90 87 0" />
+      <site name="b178" euler="90 88 0" />
+      <site name="b179" euler="90 89 0" />
+      <site name="b180" euler="90 90 0" />
+      <site name="b181" euler="90 91 0" />
+      <site name="b182" euler="90 92 0" />
+      <site name="b183" euler="90 93 0" />
+      <site name="b184" euler="90 94 0" />
+      <site name="b185" euler="90 95 0" />
+      <site name="b186" euler="90 96 0" />
+      <site name="b187" euler="90 97 0" />
+      <site name="b188" euler="90 98 0" />
+      <site name="b189" euler="90 99 0" />
+      <site name="b190" euler="90 100 0" />
+      <site name="b191" euler="90 101 0" />
+      <site name="b192" euler="90 102 0" />
+      <site name="b193" euler="90 103 0" />
+      <site name="b194" euler="90 104 0" />
+      <site name="b195" euler="90 105 0" />
+      <site name="b196" euler="90 106 0" />
+      <site name="b197" euler="90 107 0" />
+      <site name="b198" euler="90 108 0" />
+      <site name="b199" euler="90 109 0" />
+      <site name="b200" euler="90 110 0" />
+      <site name="b201" euler="90 111 0" />
+      <site name="b202" euler="90 112 0" />
+      <site name="b203" euler="90 113 0" />
+      <site name="b204" euler="90 114 0" />
+      <site name="b205" euler="90 115 0" />
+      <site name="b206" euler="90 116 0" />
+      <site name="b207" euler="90 117 0" />
+      <site name="b208" euler="90 118 0" />
+      <site name="b209" euler="90 119 0" />
+      <site name="b210" euler="90 120 0" />
+      <site name="b211" euler="90 121 0" />
+      <site name="b212" euler="90 122 0" />
+      <site name="b213" euler="90 123 0" />
+      <site name="b214" euler="90 124 0" />
+      <site name="b215" euler="90 125 0" />
+      <site name="b216" euler="90 126 0" />
+      <site name="b217" euler="90 127 0" />
+      <site name="b218" euler="90 128 0" />
+      <site name="b219" euler="90 129 0" />
+      <site name="b220" euler="90 130 0" />
+      <site name="b221" euler="90 131 0" />
+      <site name="b222" euler="90 132 0" />
+      <site name="b223" euler="90 133 0" />
+      <site name="b224" euler="90 134 0" />
+      <site name="b225" euler="90 135 0" />
+      <site name="b226" euler="90 136 0" />
+      <site name="b227" euler="90 137 0" />
+      <site name="b228" euler="90 138 0" />
+      <site name="b229" euler="90 139 0" />
+      <site name="b230" euler="90 140 0" />
+      <site name="b231" euler="90 141 0" />
+      <site name="b232" euler="90 142 0" />
+      <site name="b233" euler="90 143 0" />
+      <site name="b234" euler="90 144 0" />
+      <site name="b235" euler="90 145 0" />
+      <site name="b236" euler="90 146 0" />
+      <site name="b237" euler="90 147 0" />
+      <site name="b238" euler="90 148 0" />
+      <site name="b239" euler="90 149 0" />
+      <site name="b240" euler="90 150 0" />
+      <site name="b241" euler="90 151 0" />
+      <site name="b242" euler="90 152 0" />
+      <site name="b243" euler="90 153 0" />
+      <site name="b244" euler="90 154 0" />
+      <site name="b245" euler="90 155 0" />
+      <site name="b246" euler="90 156 0" />
+      <site name="b247" euler="90 157 0" />
+      <site name="b248" euler="90 158 0" />
+      <site name="b249" euler="90 159 0" />
+      <site name="b250" euler="90 160 0" />
+      <site name="b251" euler="90 161 0" />
+      <site name="b252" euler="90 162 0" />
+      <site name="b253" euler="90 163 0" />
+      <site name="b254" euler="90 164 0" />
+      <site name="b255" euler="90 165 0" />
+      <site name="b256" euler="90 166 0" />
+      <site name="b257" euler="90 167 0" />
+      <site name="b258" euler="90 168 0" />
+      <site name="b259" euler="90 169 0" />
+      <site name="b260" euler="90 170 0" />
+      <site name="b261" euler="90 171 0" />
+      <site name="b262" euler="90 172 0" />
+      <site name="b263" euler="90 173 0" />
+      <site name="b264" euler="90 174 0" />
+      <site name="b265" euler="90 175 0" />
+      <site name="b266" euler="90 176 0" />
+      <site name="b267" euler="90 177 0" />
+      <site name="b268" euler="90 178 0" />
+      <site name="b269" euler="90 179 0" />
+      <site name="b270" euler="90 180 0" />
+      <site name="b271" euler="90 181 0" />
+      <site name="b272" euler="90 182 0" />
+      <site name="b273" euler="90 183 0" />
+      <site name="b274" euler="90 184 0" />
+      <site name="b275" euler="90 185 0" />
+      <site name="b276" euler="90 186 0" />
+      <site name="b277" euler="90 187 0" />
+      <site name="b278" euler="90 188 0" />
+      <site name="b279" euler="90 189 0" />
+      <site name="b280" euler="90 190 0" />
+      <site name="b281" euler="90 191 0" />
+      <site name="b282" euler="90 192 0" />
+      <site name="b283" euler="90 193 0" />
+      <site name="b284" euler="90 194 0" />
+      <site name="b285" euler="90 195 0" />
+      <site name="b286" euler="90 196 0" />
+      <site name="b287" euler="90 197 0" />
+      <site name="b288" euler="90 198 0" />
+      <site name="b289" euler="90 199 0" />
+      <site name="b290" euler="90 200 0" />
+      <site name="b291" euler="90 201 0" />
+      <site name="b292" euler="90 202 0" />
+      <site name="b293" euler="90 203 0" />
+      <site name="b294" euler="90 204 0" />
+      <site name="b295" euler="90 205 0" />
+      <site name="b296" euler="90 206 0" />
+      <site name="b297" euler="90 207 0" />
+      <site name="b298" euler="90 208 0" />
+      <site name="b299" euler="90 209 0" />
+      <site name="b300" euler="90 210 0" />
+      <site name="b301" euler="90 211 0" />
+      <site name="b302" euler="90 212 0" />
+      <site name="b303" euler="90 213 0" />
+      <site name="b304" euler="90 214 0" />
+      <site name="b305" euler="90 215 0" />
+      <site name="b306" euler="90 216 0" />
+      <site name="b307" euler="90 217 0" />
+      <site name="b308" euler="90 218 0" />
+      <site name="b309" euler="90 219 0" />
+      <site name="b310" euler="90 220 0" />
+      <site name="b311" euler="90 221 0" />
+      <site name="b312" euler="90 222 0" />
+      <site name="b313" euler="90 223 0" />
+      <site name="b314" euler="90 224 0" />
+      <site name="b315" euler="90 225 0" />
+      <site name="b316" euler="90 226 0" />
+      <site name="b317" euler="90 227 0" />
+      <site name="b318" euler="90 228 0" />
+      <site name="b319" euler="90 229 0" />
+      <site name="b320" euler="90 230 0" />
+      <site name="b321" euler="90 231 0" />
+      <site name="b322" euler="90 232 0" />
+      <site name="b323" euler="90 233 0" />
+      <site name="b324" euler="90 234 0" />
+      <site name="b325" euler="90 235 0" />
+      <site name="b326" euler="90 236 0" />
+      <site name="b327" euler="90 237 0" />
+      <site name="b328" euler="90 238 0" />
+      <site name="b329" euler="90 239 0" />
+      <site name="b330" euler="90 240 0" />
+      <site name="b331" euler="90 241 0" />
+      <site name="b332" euler="90 242 0" />
+      <site name="b333" euler="90 243 0" />
+      <site name="b334" euler="90 244 0" />
+      <site name="b335" euler="90 245 0" />
+      <site name="b336" euler="90 246 0" />
+      <site name="b337" euler="90 247 0" />
+      <site name="b338" euler="90 248 0" />
+      <site name="b339" euler="90 249 0" />
+      <site name="b340" euler="90 250 0" />
+      <site name="b341" euler="90 251 0" />
+      <site name="b342" euler="90 252 0" />
+      <site name="b343" euler="90 253 0" />
+      <site name="b344" euler="90 254 0" />
+      <site name="b345" euler="90 255 0" />
+      <site name="b346" euler="90 256 0" />
+      <site name="b347" euler="90 257 0" />
+      <site name="b348" euler="90 258 0" />
+      <site name="b349" euler="90 259 0" />
+      <site name="b350" euler="90 260 0" />
+      <site name="b351" euler="90 261 0" />
+      <site name="b352" euler="90 262 0" />
+      <site name="b353" euler="90 263 0" />
+      <site name="b354" euler="90 264 0" />
+      <site name="b355" euler="90 265 0" />
+      <site name="b356" euler="90 266 0" />
+      <site name="b357" euler="90 267 0" />
+      <site name="b358" euler="90 268 0" />
+      <site name="b359" euler="90 269 0" />
+    </body>
+    
+    <body mocap="true" pos="1.5 0 1.0">
+        <geom pos="0 0 0" size=".1 0.3" type="cylinder" rgba="0 0 1 0.7"/>
+   </body>
+    
+  </worldbody>
+  
+  <actuator>
+      <motor class="controlled_joint" joint="leftMotor" name="L"/>
+      <motor class="controlled_joint" joint="rightMotor" name="R" gear="-30"/>
+      
+  </actuator>
+
+  <sensor>
+      <jointpos joint="leftMotor" noise="0"/>
+      <jointpos joint="rightMotor" noise="0"/>
+      <jointvel joint="leftMotor" noise="0"/>
+      <jointvel joint="rightMotor" noise="0"/>
+      <gyro name="gyro" site="b0" noise="0" />
+      <framequat name="quatl" objname="torso" objtype="body" />
+      <framepos name="botpos" objname="bottom" objtype="geom" />
+      <framepos name="toppos" objname="top" objtype="geom" />
+      <rangefinder site="b0" noise="0" />
+      <rangefinder site="b1" noise="0" />
+      <rangefinder site="b2" noise="0" />
+      <rangefinder site="b3" noise="0" />
+      <rangefinder site="b4" noise="0" />
+      <rangefinder site="b5" noise="0" />
+      <rangefinder site="b6" noise="0" />
+      <rangefinder site="b7" noise="0" />
+      <rangefinder site="b8" noise="0" />
+      <rangefinder site="b9" noise="0" />
+      <rangefinder site="b10" noise="0" />
+      <rangefinder site="b11" noise="0" />
+      <rangefinder site="b12" noise="0" />
+      <rangefinder site="b13" noise="0" />
+      <rangefinder site="b14" noise="0" />
+      <rangefinder site="b15" noise="0" />
+      <rangefinder site="b16" noise="0" />
+      <rangefinder site="b17" noise="0" />
+      <rangefinder site="b18" noise="0" />
+      <rangefinder site="b19" noise="0" />
+      <rangefinder site="b20" noise="0" />
+      <rangefinder site="b21" noise="0" />
+      <rangefinder site="b22" noise="0" />
+      <rangefinder site="b23" noise="0" />
+      <rangefinder site="b24" noise="0" />
+      <rangefinder site="b25" noise="0" />
+      <rangefinder site="b26" noise="0" />
+      <rangefinder site="b27" noise="0" />
+      <rangefinder site="b28" noise="0" />
+      <rangefinder site="b29" noise="0" />
+      <rangefinder site="b30" noise="0" />
+      <rangefinder site="b31" noise="0" />
+      <rangefinder site="b32" noise="0" />
+      <rangefinder site="b33" noise="0" />
+      <rangefinder site="b34" noise="0" />
+      <rangefinder site="b35" noise="0" />
+      <rangefinder site="b36" noise="0" />
+      <rangefinder site="b37" noise="0" />
+      <rangefinder site="b38" noise="0" />
+      <rangefinder site="b39" noise="0" />
+      <rangefinder site="b40" noise="0" />
+      <rangefinder site="b41" noise="0" />
+      <rangefinder site="b42" noise="0" />
+      <rangefinder site="b43" noise="0" />
+      <rangefinder site="b44" noise="0" />
+      <rangefinder site="b45" noise="0" />
+      <rangefinder site="b46" noise="0" />
+      <rangefinder site="b47" noise="0" />
+      <rangefinder site="b48" noise="0" />
+      <rangefinder site="b49" noise="0" />
+      <rangefinder site="b50" noise="0" />
+      <rangefinder site="b51" noise="0" />
+      <rangefinder site="b52" noise="0" />
+      <rangefinder site="b53" noise="0" />
+      <rangefinder site="b54" noise="0" />
+      <rangefinder site="b55" noise="0" />
+      <rangefinder site="b56" noise="0" />
+      <rangefinder site="b57" noise="0" />
+      <rangefinder site="b58" noise="0" />
+      <rangefinder site="b59" noise="0" />
+      <rangefinder site="b60" noise="0" />
+      <rangefinder site="b61" noise="0" />
+      <rangefinder site="b62" noise="0" />
+      <rangefinder site="b63" noise="0" />
+      <rangefinder site="b64" noise="0" />
+      <rangefinder site="b65" noise="0" />
+      <rangefinder site="b66" noise="0" />
+      <rangefinder site="b67" noise="0" />
+      <rangefinder site="b68" noise="0" />
+      <rangefinder site="b69" noise="0" />
+      <rangefinder site="b70" noise="0" />
+      <rangefinder site="b71" noise="0" />
+      <rangefinder site="b72" noise="0" />
+      <rangefinder site="b73" noise="0" />
+      <rangefinder site="b74" noise="0" />
+      <rangefinder site="b75" noise="0" />
+      <rangefinder site="b76" noise="0" />
+      <rangefinder site="b77" noise="0" />
+      <rangefinder site="b78" noise="0" />
+      <rangefinder site="b79" noise="0" />
+      <rangefinder site="b80" noise="0" />
+      <rangefinder site="b81" noise="0" />
+      <rangefinder site="b82" noise="0" />
+      <rangefinder site="b83" noise="0" />
+      <rangefinder site="b84" noise="0" />
+      <rangefinder site="b85" noise="0" />
+      <rangefinder site="b86" noise="0" />
+      <rangefinder site="b87" noise="0" />
+      <rangefinder site="b88" noise="0" />
+      <rangefinder site="b89" noise="0" />
+      <rangefinder site="b90" noise="0" />
+      <rangefinder site="b91" noise="0" />
+      <rangefinder site="b92" noise="0" />
+      <rangefinder site="b93" noise="0" />
+      <rangefinder site="b94" noise="0" />
+      <rangefinder site="b95" noise="0" />
+      <rangefinder site="b96" noise="0" />
+      <rangefinder site="b97" noise="0" />
+      <rangefinder site="b98" noise="0" />
+      <rangefinder site="b99" noise="0" />
+      <rangefinder site="b100" noise="0" />
+      <rangefinder site="b101" noise="0" />
+      <rangefinder site="b102" noise="0" />
+      <rangefinder site="b103" noise="0" />
+      <rangefinder site="b104" noise="0" />
+      <rangefinder site="b105" noise="0" />
+      <rangefinder site="b106" noise="0" />
+      <rangefinder site="b107" noise="0" />
+      <rangefinder site="b108" noise="0" />
+      <rangefinder site="b109" noise="0" />
+      <rangefinder site="b110" noise="0" />
+      <rangefinder site="b111" noise="0" />
+      <rangefinder site="b112" noise="0" />
+      <rangefinder site="b113" noise="0" />
+      <rangefinder site="b114" noise="0" />
+      <rangefinder site="b115" noise="0" />
+      <rangefinder site="b116" noise="0" />
+      <rangefinder site="b117" noise="0" />
+      <rangefinder site="b118" noise="0" />
+      <rangefinder site="b119" noise="0" />
+      <rangefinder site="b120" noise="0" />
+      <rangefinder site="b121" noise="0" />
+      <rangefinder site="b122" noise="0" />
+      <rangefinder site="b123" noise="0" />
+      <rangefinder site="b124" noise="0" />
+      <rangefinder site="b125" noise="0" />
+      <rangefinder site="b126" noise="0" />
+      <rangefinder site="b127" noise="0" />
+      <rangefinder site="b128" noise="0" />
+      <rangefinder site="b129" noise="0" />
+      <rangefinder site="b130" noise="0" />
+      <rangefinder site="b131" noise="0" />
+      <rangefinder site="b132" noise="0" />
+      <rangefinder site="b133" noise="0" />
+      <rangefinder site="b134" noise="0" />
+      <rangefinder site="b135" noise="0" />
+      <rangefinder site="b136" noise="0" />
+      <rangefinder site="b137" noise="0" />
+      <rangefinder site="b138" noise="0" />
+      <rangefinder site="b139" noise="0" />
+      <rangefinder site="b140" noise="0" />
+      <rangefinder site="b141" noise="0" />
+      <rangefinder site="b142" noise="0" />
+      <rangefinder site="b143" noise="0" />
+      <rangefinder site="b144" noise="0" />
+      <rangefinder site="b145" noise="0" />
+      <rangefinder site="b146" noise="0" />
+      <rangefinder site="b147" noise="0" />
+      <rangefinder site="b148" noise="0" />
+      <rangefinder site="b149" noise="0" />
+      <rangefinder site="b150" noise="0" />
+      <rangefinder site="b151" noise="0" />
+      <rangefinder site="b152" noise="0" />
+      <rangefinder site="b153" noise="0" />
+      <rangefinder site="b154" noise="0" />
+      <rangefinder site="b155" noise="0" />
+      <rangefinder site="b156" noise="0" />
+      <rangefinder site="b157" noise="0" />
+      <rangefinder site="b158" noise="0" />
+      <rangefinder site="b159" noise="0" />
+      <rangefinder site="b160" noise="0" />
+      <rangefinder site="b161" noise="0" />
+      <rangefinder site="b162" noise="0" />
+      <rangefinder site="b163" noise="0" />
+      <rangefinder site="b164" noise="0" />
+      <rangefinder site="b165" noise="0" />
+      <rangefinder site="b166" noise="0" />
+      <rangefinder site="b167" noise="0" />
+      <rangefinder site="b168" noise="0" />
+      <rangefinder site="b169" noise="0" />
+      <rangefinder site="b170" noise="0" />
+      <rangefinder site="b171" noise="0" />
+      <rangefinder site="b172" noise="0" />
+      <rangefinder site="b173" noise="0" />
+      <rangefinder site="b174" noise="0" />
+      <rangefinder site="b175" noise="0" />
+      <rangefinder site="b176" noise="0" />
+      <rangefinder site="b177" noise="0" />
+      <rangefinder site="b178" noise="0" />
+      <rangefinder site="b179" noise="0" />
+      <rangefinder site="b180" noise="0" />
+      <rangefinder site="b181" noise="0" />
+      <rangefinder site="b182" noise="0" />
+      <rangefinder site="b183" noise="0" />
+      <rangefinder site="b184" noise="0" />
+      <rangefinder site="b185" noise="0" />
+      <rangefinder site="b186" noise="0" />
+      <rangefinder site="b187" noise="0" />
+      <rangefinder site="b188" noise="0" />
+      <rangefinder site="b189" noise="0" />
+      <rangefinder site="b190" noise="0" />
+      <rangefinder site="b191" noise="0" />
+      <rangefinder site="b192" noise="0" />
+      <rangefinder site="b193" noise="0" />
+      <rangefinder site="b194" noise="0" />
+      <rangefinder site="b195" noise="0" />
+      <rangefinder site="b196" noise="0" />
+      <rangefinder site="b197" noise="0" />
+      <rangefinder site="b198" noise="0" />
+      <rangefinder site="b199" noise="0" />
+      <rangefinder site="b200" noise="0" />
+      <rangefinder site="b201" noise="0" />
+      <rangefinder site="b202" noise="0" />
+      <rangefinder site="b203" noise="0" />
+      <rangefinder site="b204" noise="0" />
+      <rangefinder site="b205" noise="0" />
+      <rangefinder site="b206" noise="0" />
+      <rangefinder site="b207" noise="0" />
+      <rangefinder site="b208" noise="0" />
+      <rangefinder site="b209" noise="0" />
+      <rangefinder site="b210" noise="0" />
+      <rangefinder site="b211" noise="0" />
+      <rangefinder site="b212" noise="0" />
+      <rangefinder site="b213" noise="0" />
+      <rangefinder site="b214" noise="0" />
+      <rangefinder site="b215" noise="0" />
+      <rangefinder site="b216" noise="0" />
+      <rangefinder site="b217" noise="0" />
+      <rangefinder site="b218" noise="0" />
+      <rangefinder site="b219" noise="0" />
+      <rangefinder site="b220" noise="0" />
+      <rangefinder site="b221" noise="0" />
+      <rangefinder site="b222" noise="0" />
+      <rangefinder site="b223" noise="0" />
+      <rangefinder site="b224" noise="0" />
+      <rangefinder site="b225" noise="0" />
+      <rangefinder site="b226" noise="0" />
+      <rangefinder site="b227" noise="0" />
+      <rangefinder site="b228" noise="0" />
+      <rangefinder site="b229" noise="0" />
+      <rangefinder site="b230" noise="0" />
+      <rangefinder site="b231" noise="0" />
+      <rangefinder site="b232" noise="0" />
+      <rangefinder site="b233" noise="0" />
+      <rangefinder site="b234" noise="0" />
+      <rangefinder site="b235" noise="0" />
+      <rangefinder site="b236" noise="0" />
+      <rangefinder site="b237" noise="0" />
+      <rangefinder site="b238" noise="0" />
+      <rangefinder site="b239" noise="0" />
+      <rangefinder site="b240" noise="0" />
+      <rangefinder site="b241" noise="0" />
+      <rangefinder site="b242" noise="0" />
+      <rangefinder site="b243" noise="0" />
+      <rangefinder site="b244" noise="0" />
+      <rangefinder site="b245" noise="0" />
+      <rangefinder site="b246" noise="0" />
+      <rangefinder site="b247" noise="0" />
+      <rangefinder site="b248" noise="0" />
+      <rangefinder site="b249" noise="0" />
+      <rangefinder site="b250" noise="0" />
+      <rangefinder site="b251" noise="0" />
+      <rangefinder site="b252" noise="0" />
+      <rangefinder site="b253" noise="0" />
+      <rangefinder site="b254" noise="0" />
+      <rangefinder site="b255" noise="0" />
+      <rangefinder site="b256" noise="0" />
+      <rangefinder site="b257" noise="0" />
+      <rangefinder site="b258" noise="0" />
+      <rangefinder site="b259" noise="0" />
+      <rangefinder site="b260" noise="0" />
+      <rangefinder site="b261" noise="0" />
+      <rangefinder site="b262" noise="0" />
+      <rangefinder site="b263" noise="0" />
+      <rangefinder site="b264" noise="0" />
+      <rangefinder site="b265" noise="0" />
+      <rangefinder site="b266" noise="0" />
+      <rangefinder site="b267" noise="0" />
+      <rangefinder site="b268" noise="0" />
+      <rangefinder site="b269" noise="0" />
+      <rangefinder site="b270" noise="0" />
+      <rangefinder site="b271" noise="0" />
+      <rangefinder site="b272" noise="0" />
+      <rangefinder site="b273" noise="0" />
+      <rangefinder site="b274" noise="0" />
+      <rangefinder site="b275" noise="0" />
+      <rangefinder site="b276" noise="0" />
+      <rangefinder site="b277" noise="0" />
+      <rangefinder site="b278" noise="0" />
+      <rangefinder site="b279" noise="0" />
+      <rangefinder site="b280" noise="0" />
+      <rangefinder site="b281" noise="0" />
+      <rangefinder site="b282" noise="0" />
+      <rangefinder site="b283" noise="0" />
+      <rangefinder site="b284" noise="0" />
+      <rangefinder site="b285" noise="0" />
+      <rangefinder site="b286" noise="0" />
+      <rangefinder site="b287" noise="0" />
+      <rangefinder site="b288" noise="0" />
+      <rangefinder site="b289" noise="0" />
+      <rangefinder site="b290" noise="0" />
+      <rangefinder site="b291" noise="0" />
+      <rangefinder site="b292" noise="0" />
+      <rangefinder site="b293" noise="0" />
+      <rangefinder site="b294" noise="0" />
+      <rangefinder site="b295" noise="0" />
+      <rangefinder site="b296" noise="0" />
+      <rangefinder site="b297" noise="0" />
+      <rangefinder site="b298" noise="0" />
+      <rangefinder site="b299" noise="0" />
+      <rangefinder site="b300" noise="0" />
+      <rangefinder site="b301" noise="0" />
+      <rangefinder site="b302" noise="0" />
+      <rangefinder site="b303" noise="0" />
+      <rangefinder site="b304" noise="0" />
+      <rangefinder site="b305" noise="0" />
+      <rangefinder site="b306" noise="0" />
+      <rangefinder site="b307" noise="0" />
+      <rangefinder site="b308" noise="0" />
+      <rangefinder site="b309" noise="0" />
+      <rangefinder site="b310" noise="0" />
+      <rangefinder site="b311" noise="0" />
+      <rangefinder site="b312" noise="0" />
+      <rangefinder site="b313" noise="0" />
+      <rangefinder site="b314" noise="0" />
+      <rangefinder site="b315" noise="0" />
+      <rangefinder site="b316" noise="0" />
+      <rangefinder site="b317" noise="0" />
+      <rangefinder site="b318" noise="0" />
+      <rangefinder site="b319" noise="0" />
+      <rangefinder site="b320" noise="0" />
+      <rangefinder site="b321" noise="0" />
+      <rangefinder site="b322" noise="0" />
+      <rangefinder site="b323" noise="0" />
+      <rangefinder site="b324" noise="0" />
+      <rangefinder site="b325" noise="0" />
+      <rangefinder site="b326" noise="0" />
+      <rangefinder site="b327" noise="0" />
+      <rangefinder site="b328" noise="0" />
+      <rangefinder site="b329" noise="0" />
+      <rangefinder site="b330" noise="0" />
+      <rangefinder site="b331" noise="0" />
+      <rangefinder site="b332" noise="0" />
+      <rangefinder site="b333" noise="0" />
+      <rangefinder site="b334" noise="0" />
+      <rangefinder site="b335" noise="0" />
+      <rangefinder site="b336" noise="0" />
+      <rangefinder site="b337" noise="0" />
+      <rangefinder site="b338" noise="0" />
+      <rangefinder site="b339" noise="0" />
+      <rangefinder site="b340" noise="0" />
+      <rangefinder site="b341" noise="0" />
+      <rangefinder site="b342" noise="0" />
+      <rangefinder site="b343" noise="0" />
+      <rangefinder site="b344" noise="0" />
+      <rangefinder site="b345" noise="0" />
+      <rangefinder site="b346" noise="0" />
+      <rangefinder site="b347" noise="0" />
+      <rangefinder site="b348" noise="0" />
+      <rangefinder site="b349" noise="0" />
+      <rangefinder site="b350" noise="0" />
+      <rangefinder site="b351" noise="0" />
+      <rangefinder site="b352" noise="0" />
+      <rangefinder site="b353" noise="0" />
+      <rangefinder site="b354" noise="0" />
+      <rangefinder site="b355" noise="0" />
+      <rangefinder site="b356" noise="0" />
+      <rangefinder site="b357" noise="0" />
+      <rangefinder site="b358" noise="0" />
+      <rangefinder site="b359" noise="0" />
+  </sensor>
+</mujoco>
+

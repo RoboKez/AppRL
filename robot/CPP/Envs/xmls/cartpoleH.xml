@@ -1,0 +1,4 @@
+<mujoco model="CartPole Basic">
+  <include file="cartpole.xml"/>
+</mujoco>
+

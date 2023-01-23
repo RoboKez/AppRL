@@ -1,0 +1,20 @@
+<mujoco model="CartPole Basic">
+  <include file="scene.xml"/>
+  <option timestep="0.002" jacobian="dense"/>
+  <size nconmax="100" njmax="300" nstack="50000"/>
+
+  <worldbody>
+      <body name="pole" mocap="true" pos="0 0 0.2">
+          <geom type="capsule" pos="0 0 0.2" size="0.01 0.2" material="matmarble" rgba="0 0.5 0 0.8" group="1" condim="1"/>
+      </body>
+      
+      <body name="cart" mocap="true" pos="0 0 0.2">
+        <geom type="box" size="0.15 0.015 0.015"/>
+      </body>
+  </worldbody>
+  
+  <equality>
+          <connect body1="pole" body2="cart" anchor="0 0 0" active="true"/>
+      </equality>
+
+</mujoco>
