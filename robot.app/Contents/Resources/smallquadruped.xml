@@ -1,0 +1,951 @@
+<mujoco model="small quadruped">
+    <compiler angle="degree" inertiafromgeom="true" coordinate="local"/>
+    <option integrator="RK4" iterations="50" solver="PGS" timestep="0.005" gravity="0 0 -9.81"/>
+
+        <default>
+
+            <default class="controlled_joint">
+                <motor gear="20" ctrllimited="true" ctrlrange="-1 1"/>
+                <joint armature="0.02" damping="5" pos="0 0 0" limited="true" type="hinge"/>
+                <geom conaffinity="1" condim="1" contype="1" margin="0.001" material="geom" pos="0 0 0" type="mesh" rgba="1 0 0 1"/>
+            </default>
+            
+
+            <default class="controlled_joint_reversed">
+                <motor gear="-20" ctrllimited="true" ctrlrange="-1 1"/>
+            </default>
+
+            <default class="tactile_sensor">
+                <geom size=".02" type="sphere" pos="0. 0. -.15" rgba="0. 0. 0. 1."/>
+                <site size=".021" type="sphere" pos="0. 0. -.15" rgba="0. 0. 0. .5"/>
+            </default>
+
+            <default class="target_slider">
+                <joint armature="0" damping="0" limited="true" pos="0 0 0" range="-1000 1000" ref=".1" stiffness="0" type="slide"/>
+                <geom conaffinity="0" contype="0" pos="0 0 1" rgba="0 1 0 0.5" size="0.05 1" type="cylinder"/>
+            </default>
+
+        <default class="bearing">
+            <joint pos="0 0 0" limited="false" damping="0.01" armature="0.01" type="hinge" axis="0 1 0"/>
+            <geom pos="0 0 0" conaffinity="0" rgba="0 0 0 1" friction="0 0 0"/>
+		</default>
+
+        <default class="connect_ball">
+            <geom type="sphere"  pos="0 0 0" euler="0 0 0" size=".003" conaffinity="0" rgba="1 0 0 .5"/>
+		</default>
+
+    </default>
+
+    <asset>
+        <texture builtin="gradient" height="100" rgb1=".2 .3 .4" rgb2="0 0 0" type="skybox" width="100"/>
+        <texture builtin="flat" height="1278" mark="cross" markrgb="1 1 1" name="texgeom" random="0.01" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" type="cube" width="127"/>
+        <texture builtin="checker" height="100" name="texplane" rgb1="0 0 0" rgb2="0.8 0.8 0.8" type="2d" width="100"/>
+        <material name="MatPlane" reflectance="0.5" shininess="1" specular="1" texrepeat="60 60" texture="texplane"/>
+        <material name="geom" texture="texgeom" texuniform="true"/>
+        
+        <mesh name="dynamixel" file="dynamixel.stl" scale="0.002 0.002 0.002"/>
+        <mesh name="torso" file="b3_torso.stl" scale="0.0001 0.0001 0.0001"/>
+        <mesh name="hip" file="hip.stl" scale="0.002 0.002 0.002"/>
+        <mesh name="knee" file="b3_stump.stl" scale="0.0002 0.0002 0.0002"/>
+        
+        
+    </asset>
+
+    <worldbody>
+        <light cutoff="100" diffuse="1 1 1" dir="-0 0 -1.3" directional="true" exponent="1" pos="0 0 1.3" specular=".1 .1 .1"/>
+        <geom condim="3" friction="1 .1 .1" material="MatPlane" name="floor" pos="0 0 0" rgba="0 0.9 0.8 1" size="1 1 0.125" type="plane"/>
+        
+        <body name="robot" pos="0 0 0.2" euler="0 0 -90">
+            <geom name="aluminium_plate" pos="0 0 0" size=".1 0.075 0.005" type="box" rgba="0 0 1 0.7"/>
+            <geom name="FR_motor" pos="0.078 -0.044 -0.033" type="mesh" mesh="dynamixel" euler="180 0 90"/>
+            <geom name="BR_motor" pos="-0.078 -0.044 -0.033" type="mesh" mesh="dynamixel" euler="180 180 90"/>
+            <geom name="FL_motor" pos="0.078 0.044 -0.033" type="mesh" mesh="dynamixel" euler="0 0 90"/>
+            <geom name="BL_motor" pos="-0.078 0.044 -0.033" type="mesh" mesh="dynamixel" euler="0 180 90"/>
+            
+            <body name = "hipFL"  pos="-0.078 0.0775 -0.033" euler="0 0 90">
+                <joint class="controlled_joint" name="dynamixel_1" axis="1 0 0" range="0 30"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeLF" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_2" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="L_touch_zone"/>
+                </body>
+            </body>
+
+             <body name = "hipFR"  pos="0.078 0.0775 -0.033" euler="0 0 90">
+                <joint class="controlled_joint" name="dynamixel_3" axis="1 0 0" range="-30 0"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeFR" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_4" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="R_touch_zone"/>
+                </body>
+            </body>
+
+             <body name = "hipBL"  pos="-0.078 -0.0775 -0.033" euler="0 0 -90">
+                <joint class="controlled_joint" name="dynamixel_5" axis="1 0 0" range="-30 0"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeBL" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_6" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="L_touch_zone_rear"/>
+                </body>
+            </body>
+
+             <body name = "hipBR"  pos="0.078 -0.0775 -0.033" euler="0 0 -90">
+                <joint class="controlled_joint" name="dynamixel_7" axis="1 0 0" range="0 30"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeBR" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_8" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="R_touch_zone_rear"/>
+                </body>
+            </body>
+            
+            
+            <joint armature="0" damping="0" limited="false" name="root_1" pos="0 0 0" stiffness="0" type="free"/>
+<!--            <geom conaffinity="0" friction="0 0 0" name="torso_geom" pos="0 0 0" size=".15 .1 .02" type="box" rgba="1 0 0 0.7"/>-->
+            <site name="low_head" pos="0. 0. 0.6" size=".01 .03 .01" type="ellipsoid"/>
+            <site name="high_head" pos="0. 0. 0.8" size=".03 .03 .01" type="ellipsoid"/>
+            <body name="lidar24" pos="0. 0. 0.2" euler="-90 -90 0">
+                <geom type="cylinder" size=".08.03" euler="-90 0 0" rgba=".0 .0 .0 .7" density="1"/>
+                <site name="r0" euler="0 0 0"/>
+                <site name="r1" euler="0 1 0"/>
+                <site name="r2" euler="0 2 0"/>
+                <site name="r3" euler="0 3 0"/>
+                <site name="r4" euler="0 4 0"/>
+                <site name="r5" euler="0 5 0"/>
+                <site name="r6" euler="0 6 0"/>
+                <site name="r7" euler="0 7 0"/>
+                <site name="r8" euler="0 8 0"/>
+                <site name="r9" euler="0 9 0"/>
+                <site name="r10" euler="0 10 0"/>
+                <site name="r11" euler="0 11 0"/>
+                <site name="r12" euler="0 12 0"/>
+                <site name="r13" euler="0 13 0"/>
+                <site name="r14" euler="0 14 0"/>
+                <site name="r15" euler="0 15 0"/>
+                <site name="r16" euler="0 16 0"/>
+                <site name="r17" euler="0 17 0"/>
+                <site name="r18" euler="0 18 0"/>
+                <site name="r19" euler="0 19 0"/>
+                <site name="r20" euler="0 20 0"/>
+                <site name="r21" euler="0 21 0"/>
+                <site name="r22" euler="0 22 0"/>
+                <site name="r23" euler="0 23 0"/>
+                <site name="r24" euler="0 24 0"/>
+                <site name="r25" euler="0 25 0"/>
+                <site name="r26" euler="0 26 0"/>
+                <site name="r27" euler="0 27 0"/>
+                <site name="r28" euler="0 28 0"/>
+                <site name="r29" euler="0 29 0"/>
+                <site name="r30" euler="0 30 0"/>
+                <site name="r31" euler="0 31 0"/>
+                <site name="r32" euler="0 32 0"/>
+                <site name="r33" euler="0 33 0"/>
+                <site name="r34" euler="0 34 0"/>
+                <site name="r35" euler="0 35 0"/>
+                <site name="r36" euler="0 36 0"/>
+                <site name="r37" euler="0 37 0"/>
+                <site name="r38" euler="0 38 0"/>
+                <site name="r39" euler="0 39 0"/>
+                <site name="r40" euler="0 40 0"/>
+                <site name="r41" euler="0 41 0"/>
+                <site name="r42" euler="0 42 0"/>
+                <site name="r43" euler="0 43 0"/>
+                <site name="r44" euler="0 44 0"/>
+                <site name="r45" euler="0 45 0"/>
+                <site name="r46" euler="0 46 0"/>
+                <site name="r47" euler="0 47 0"/>
+                <site name="r48" euler="0 48 0"/>
+                <site name="r49" euler="0 49 0"/>
+                <site name="r50" euler="0 50 0"/>
+                <site name="r51" euler="0 51 0"/>
+                <site name="r52" euler="0 52 0"/>
+                <site name="r53" euler="0 53 0"/>
+                <site name="r54" euler="0 54 0"/>
+                <site name="r55" euler="0 55 0"/>
+                <site name="r56" euler="0 56 0"/>
+                <site name="r57" euler="0 57 0"/>
+                <site name="r58" euler="0 58 0"/>
+                <site name="r59" euler="0 59 0"/>
+                <site name="r60" euler="0 60 0"/>
+                <site name="r61" euler="0 61 0"/>
+                <site name="r62" euler="0 62 0"/>
+                <site name="r63" euler="0 63 0"/>
+                <site name="r64" euler="0 64 0"/>
+                <site name="r65" euler="0 65 0"/>
+                <site name="r66" euler="0 66 0"/>
+                <site name="r67" euler="0 67 0"/>
+                <site name="r68" euler="0 68 0"/>
+                <site name="r69" euler="0 69 0"/>
+                <site name="r70" euler="0 70 0"/>
+                <site name="r71" euler="0 71 0"/>
+                <site name="r72" euler="0 72 0"/>
+                <site name="r73" euler="0 73 0"/>
+                <site name="r74" euler="0 74 0"/>
+                <site name="r75" euler="0 75 0"/>
+                <site name="r76" euler="0 76 0"/>
+                <site name="r77" euler="0 77 0"/>
+                <site name="r78" euler="0 78 0"/>
+                <site name="r79" euler="0 79 0"/>
+                <site name="r80" euler="0 80 0"/>
+                <site name="r81" euler="0 81 0"/>
+                <site name="r82" euler="0 82 0"/>
+                <site name="r83" euler="0 83 0"/>
+                <site name="r84" euler="0 84 0"/>
+                <site name="r85" euler="0 85 0"/>
+                <site name="r86" euler="0 86 0"/>
+                <site name="r87" euler="0 87 0"/>
+                <site name="r88" euler="0 88 0"/>
+                <site name="r89" euler="0 89 0"/>
+                <site name="r90" euler="0 90 0"/>
+                <site name="r91" euler="0 91 0"/>
+                <site name="r92" euler="0 92 0"/>
+                <site name="r93" euler="0 93 0"/>
+                <site name="r94" euler="0 94 0"/>
+                <site name="r95" euler="0 95 0"/>
+                <site name="r96" euler="0 96 0"/>
+                <site name="r97" euler="0 97 0"/>
+                <site name="r98" euler="0 98 0"/>
+                <site name="r99" euler="0 99 0"/>
+                <site name="r100" euler="0 100 0"/>
+                <site name="r101" euler="0 101 0"/>
+                <site name="r102" euler="0 102 0"/>
+                <site name="r103" euler="0 103 0"/>
+                <site name="r104" euler="0 104 0"/>
+                <site name="r105" euler="0 105 0"/>
+                <site name="r106" euler="0 106 0"/>
+                <site name="r107" euler="0 107 0"/>
+                <site name="r108" euler="0 108 0"/>
+                <site name="r109" euler="0 109 0"/>
+                <site name="r110" euler="0 110 0"/>
+                <site name="r111" euler="0 111 0"/>
+                <site name="r112" euler="0 112 0"/>
+                <site name="r113" euler="0 113 0"/>
+                <site name="r114" euler="0 114 0"/>
+                <site name="r115" euler="0 115 0"/>
+                <site name="r116" euler="0 116 0"/>
+                <site name="r117" euler="0 117 0"/>
+                <site name="r118" euler="0 118 0"/>
+                <site name="r119" euler="0 119 0"/>
+                <site name="r120" euler="0 120 0"/>
+                <site name="r121" euler="0 121 0"/>
+                <site name="r122" euler="0 122 0"/>
+                <site name="r123" euler="0 123 0"/>
+                <site name="r124" euler="0 124 0"/>
+                <site name="r125" euler="0 125 0"/>
+                <site name="r126" euler="0 126 0"/>
+                <site name="r127" euler="0 127 0"/>
+                <site name="r128" euler="0 128 0"/>
+                <site name="r129" euler="0 129 0"/>
+                <site name="r130" euler="0 130 0"/>
+                <site name="r131" euler="0 131 0"/>
+                <site name="r132" euler="0 132 0"/>
+                <site name="r133" euler="0 133 0"/>
+                <site name="r134" euler="0 134 0"/>
+                <site name="r135" euler="0 135 0"/>
+                <site name="r136" euler="0 136 0"/>
+                <site name="r137" euler="0 137 0"/>
+                <site name="r138" euler="0 138 0"/>
+                <site name="r139" euler="0 139 0"/>
+                <site name="r140" euler="0 140 0"/>
+                <site name="r141" euler="0 141 0"/>
+                <site name="r142" euler="0 142 0"/>
+                <site name="r143" euler="0 143 0"/>
+                <site name="r144" euler="0 144 0"/>
+                <site name="r145" euler="0 145 0"/>
+                <site name="r146" euler="0 146 0"/>
+                <site name="r147" euler="0 147 0"/>
+                <site name="r148" euler="0 148 0"/>
+                <site name="r149" euler="0 149 0"/>
+                <site name="r150" euler="0 150 0"/>
+                <site name="r151" euler="0 151 0"/>
+                <site name="r152" euler="0 152 0"/>
+                <site name="r153" euler="0 153 0"/>
+                <site name="r154" euler="0 154 0"/>
+                <site name="r155" euler="0 155 0"/>
+                <site name="r156" euler="0 156 0"/>
+                <site name="r157" euler="0 157 0"/>
+                <site name="r158" euler="0 158 0"/>
+                <site name="r159" euler="0 159 0"/>
+                <site name="r160" euler="0 160 0"/>
+                <site name="r161" euler="0 161 0"/>
+                <site name="r162" euler="0 162 0"/>
+                <site name="r163" euler="0 163 0"/>
+                <site name="r164" euler="0 164 0"/>
+                <site name="r165" euler="0 165 0"/>
+                <site name="r166" euler="0 166 0"/>
+                <site name="r167" euler="0 167 0"/>
+                <site name="r168" euler="0 168 0"/>
+                <site name="r169" euler="0 169 0"/>
+                <site name="r170" euler="0 170 0"/>
+                <site name="r171" euler="0 171 0"/>
+                <site name="r172" euler="0 172 0"/>
+                <site name="r173" euler="0 173 0"/>
+                <site name="r174" euler="0 174 0"/>
+                <site name="r175" euler="0 175 0"/>
+                <site name="r176" euler="0 176 0"/>
+                <site name="r177" euler="0 177 0"/>
+                <site name="r178" euler="0 178 0"/>
+                <site name="r179" euler="0 179 0"/>
+                <site name="r180" euler="0 180 0"/>
+                <site name="r181" euler="0 181 0"/>
+                <site name="r182" euler="0 182 0"/>
+                <site name="r183" euler="0 183 0"/>
+                <site name="r184" euler="0 184 0"/>
+                <site name="r185" euler="0 185 0"/>
+                <site name="r186" euler="0 186 0"/>
+                <site name="r187" euler="0 187 0"/>
+                <site name="r188" euler="0 188 0"/>
+                <site name="r189" euler="0 189 0"/>
+                <site name="r190" euler="0 190 0"/>
+                <site name="r191" euler="0 191 0"/>
+                <site name="r192" euler="0 192 0"/>
+                <site name="r193" euler="0 193 0"/>
+                <site name="r194" euler="0 194 0"/>
+                <site name="r195" euler="0 195 0"/>
+                <site name="r196" euler="0 196 0"/>
+                <site name="r197" euler="0 197 0"/>
+                <site name="r198" euler="0 198 0"/>
+                <site name="r199" euler="0 199 0"/>
+                <site name="r200" euler="0 200 0"/>
+                <site name="r201" euler="0 201 0"/>
+                <site name="r202" euler="0 202 0"/>
+                <site name="r203" euler="0 203 0"/>
+                <site name="r204" euler="0 204 0"/>
+                <site name="r205" euler="0 205 0"/>
+                <site name="r206" euler="0 206 0"/>
+                <site name="r207" euler="0 207 0"/>
+                <site name="r208" euler="0 208 0"/>
+                <site name="r209" euler="0 209 0"/>
+                <site name="r210" euler="0 210 0"/>
+                <site name="r211" euler="0 211 0"/>
+                <site name="r212" euler="0 212 0"/>
+                <site name="r213" euler="0 213 0"/>
+                <site name="r214" euler="0 214 0"/>
+                <site name="r215" euler="0 215 0"/>
+                <site name="r216" euler="0 216 0"/>
+                <site name="r217" euler="0 217 0"/>
+                <site name="r218" euler="0 218 0"/>
+                <site name="r219" euler="0 219 0"/>
+                <site name="r220" euler="0 220 0"/>
+                <site name="r221" euler="0 221 0"/>
+                <site name="r222" euler="0 222 0"/>
+                <site name="r223" euler="0 223 0"/>
+                <site name="r224" euler="0 224 0"/>
+                <site name="r225" euler="0 225 0"/>
+                <site name="r226" euler="0 226 0"/>
+                <site name="r227" euler="0 227 0"/>
+                <site name="r228" euler="0 228 0"/>
+                <site name="r229" euler="0 229 0"/>
+                <site name="r230" euler="0 230 0"/>
+                <site name="r231" euler="0 231 0"/>
+                <site name="r232" euler="0 232 0"/>
+                <site name="r233" euler="0 233 0"/>
+                <site name="r234" euler="0 234 0"/>
+                <site name="r235" euler="0 235 0"/>
+                <site name="r236" euler="0 236 0"/>
+                <site name="r237" euler="0 237 0"/>
+                <site name="r238" euler="0 238 0"/>
+                <site name="r239" euler="0 239 0"/>
+                <site name="r240" euler="0 240 0"/>
+                <site name="r241" euler="0 241 0"/>
+                <site name="r242" euler="0 242 0"/>
+                <site name="r243" euler="0 243 0"/>
+                <site name="r244" euler="0 244 0"/>
+                <site name="r245" euler="0 245 0"/>
+                <site name="r246" euler="0 246 0"/>
+                <site name="r247" euler="0 247 0"/>
+                <site name="r248" euler="0 248 0"/>
+                <site name="r249" euler="0 249 0"/>
+                <site name="r250" euler="0 250 0"/>
+                <site name="r251" euler="0 251 0"/>
+                <site name="r252" euler="0 252 0"/>
+                <site name="r253" euler="0 253 0"/>
+                <site name="r254" euler="0 254 0"/>
+                <site name="r255" euler="0 255 0"/>
+                <site name="r256" euler="0 256 0"/>
+                <site name="r257" euler="0 257 0"/>
+                <site name="r258" euler="0 258 0"/>
+                <site name="r259" euler="0 259 0"/>
+                <site name="r260" euler="0 260 0"/>
+                <site name="r261" euler="0 261 0"/>
+                <site name="r262" euler="0 262 0"/>
+                <site name="r263" euler="0 263 0"/>
+                <site name="r264" euler="0 264 0"/>
+                <site name="r265" euler="0 265 0"/>
+                <site name="r266" euler="0 266 0"/>
+                <site name="r267" euler="0 267 0"/>
+                <site name="r268" euler="0 268 0"/>
+                <site name="r269" euler="0 269 0"/>
+                <site name="r270" euler="0 270 0"/>
+                <site name="r271" euler="0 271 0"/>
+                <site name="r272" euler="0 272 0"/>
+                <site name="r273" euler="0 273 0"/>
+                <site name="r274" euler="0 274 0"/>
+                <site name="r275" euler="0 275 0"/>
+                <site name="r276" euler="0 276 0"/>
+                <site name="r277" euler="0 277 0"/>
+                <site name="r278" euler="0 278 0"/>
+                <site name="r279" euler="0 279 0"/>
+                <site name="r280" euler="0 280 0"/>
+                <site name="r281" euler="0 281 0"/>
+                <site name="r282" euler="0 282 0"/>
+                <site name="r283" euler="0 283 0"/>
+                <site name="r284" euler="0 284 0"/>
+                <site name="r285" euler="0 285 0"/>
+                <site name="r286" euler="0 286 0"/>
+                <site name="r287" euler="0 287 0"/>
+                <site name="r288" euler="0 288 0"/>
+                <site name="r289" euler="0 289 0"/>
+                <site name="r290" euler="0 290 0"/>
+                <site name="r291" euler="0 291 0"/>
+                <site name="r292" euler="0 292 0"/>
+                <site name="r293" euler="0 293 0"/>
+                <site name="r294" euler="0 294 0"/>
+                <site name="r295" euler="0 295 0"/>
+                <site name="r296" euler="0 296 0"/>
+                <site name="r297" euler="0 297 0"/>
+                <site name="r298" euler="0 298 0"/>
+                <site name="r299" euler="0 299 0"/>
+                <site name="r300" euler="0 300 0"/>
+                <site name="r301" euler="0 301 0"/>
+                <site name="r302" euler="0 302 0"/>
+                <site name="r303" euler="0 303 0"/>
+                <site name="r304" euler="0 304 0"/>
+                <site name="r305" euler="0 305 0"/>
+                <site name="r306" euler="0 306 0"/>
+                <site name="r307" euler="0 307 0"/>
+                <site name="r308" euler="0 308 0"/>
+                <site name="r309" euler="0 309 0"/>
+                <site name="r310" euler="0 310 0"/>
+                <site name="r311" euler="0 311 0"/>
+                <site name="r312" euler="0 312 0"/>
+                <site name="r313" euler="0 313 0"/>
+                <site name="r314" euler="0 314 0"/>
+                <site name="r315" euler="0 315 0"/>
+                <site name="r316" euler="0 316 0"/>
+                <site name="r317" euler="0 317 0"/>
+                <site name="r318" euler="0 318 0"/>
+                <site name="r319" euler="0 319 0"/>
+                <site name="r320" euler="0 320 0"/>
+                <site name="r321" euler="0 321 0"/>
+                <site name="r322" euler="0 322 0"/>
+                <site name="r323" euler="0 323 0"/>
+                <site name="r324" euler="0 324 0"/>
+                <site name="r325" euler="0 325 0"/>
+                <site name="r326" euler="0 326 0"/>
+                <site name="r327" euler="0 327 0"/>
+                <site name="r328" euler="0 328 0"/>
+                <site name="r329" euler="0 329 0"/>
+                <site name="r330" euler="0 330 0"/>
+                <site name="r331" euler="0 331 0"/>
+                <site name="r332" euler="0 332 0"/>
+                <site name="r333" euler="0 333 0"/>
+                <site name="r334" euler="0 334 0"/>
+                <site name="r335" euler="0 335 0"/>
+                <site name="r336" euler="0 336 0"/>
+                <site name="r337" euler="0 337 0"/>
+                <site name="r338" euler="0 338 0"/>
+                <site name="r339" euler="0 339 0"/>
+                <site name="r340" euler="0 340 0"/>
+                <site name="r341" euler="0 341 0"/>
+                <site name="r342" euler="0 342 0"/>
+                <site name="r343" euler="0 343 0"/>
+                <site name="r344" euler="0 344 0"/>
+                <site name="r345" euler="0 345 0"/>
+                <site name="r346" euler="0 346 0"/>
+                <site name="r347" euler="0 347 0"/>
+                <site name="r348" euler="0 348 0"/>
+                <site name="r349" euler="0 349 0"/>
+                <site name="r350" euler="0 350 0"/>
+                <site name="r351" euler="0 351 0"/>
+                <site name="r352" euler="0 352 0"/>
+                <site name="r353" euler="0 353 0"/>
+                <site name="r354" euler="0 354 0"/>
+                <site name="r355" euler="0 355 0"/>
+                <site name="r356" euler="0 356 0"/>
+                <site name="r357" euler="0 357 0"/>
+                <site name="r358" euler="0 358 0"/>
+                <site name="r359" euler="0 359 0"/>
+                
+
+            </body>
+
+
+<!--            <!--Front Left leg-->-->
+<!--            <body name="FL_leg" pos="0.15 0.1 -0.0" euler="0 0 0">-->
+<!--                <geom class="bearing" pos="0 0 -0.1" size="0.005 0.1" type="capsule" rgba="0 0 0 0.7"/>-->
+<!--                <joint name="FLx_limb" class="controlled_joint" axis="0 1 0" range="-30 0"/>-->
+<!--                <joint name="FLy_limb" class="controlled_joint" axis="1 0 0" range="0 30"/>-->
+<!--            </body>-->
+<!---->
+<!--            <!--Front Right leg-->-->
+<!--            <body name="FR_leg" pos="0.15 -0.1 -0.0" euler="0 0 0">-->
+<!--                <geom class="bearing" pos="0 0 -0.1" size="0.005 0.1" type="capsule" rgba="0 0 0 0.7"/>-->
+<!--                <joint name="FRx_limb" class="controlled_joint" axis="0 1 0" range="-30 0"/>-->
+<!--                <joint name="FRy_limb" class="controlled_joint" axis="1 0 0" range="-30 0"/>-->
+<!--            </body>-->
+<!---->
+<!--            <!--Back Left leg-->-->
+<!--            <body name="BL_leg" pos="-0.15 0.1 -0.0" euler="0 0 0">-->
+<!--                <geom class="bearing" pos="0 0 -0.1" size="0.005 0.1" type="capsule" rgba="0 0 0 0.7"/>-->
+<!--                <joint name="BLx_limb" class="controlled_joint" axis="0 1 0" range="0 30"/>-->
+<!--                <joint name="BLy_limb" class="controlled_joint" axis="1 0 0" range="0 30"/>-->
+<!--            </body>-->
+<!---->
+<!--            <!--Back Right leg-->-->
+<!--            <body name="BR_leg" pos="-0.15 -0.1 -0.0" euler="0 0 0">-->
+<!--                <geom class="bearing" pos="0 0 -0.1" size="0.005 0.1" type="capsule" rgba="0 0 0 0.7"/>-->
+<!--                <joint name="BRx_limb" class="controlled_joint" axis="0 1 0" range="0 30"/>-->
+<!--                <joint name="BRy_limb" class="controlled_joint" axis="1 0 0" range="-30 0"/>-->
+<!--            </body>-->
+
+        </body>
+        
+        <body mocap="true" pos="1 0 0">
+            <geom class="target_slider" name="target"/>
+       </body>
+        
+
+
+                <!-- Target -->
+<!--        <body name="target" pos="0 0 0">-->
+<!--            <joint class="target_slider" axis="1 0 0" name="target_x"/>-->
+<!--            <joint class="target_slider" axis="0 1 0" name="target_y"/>-->
+<!--            <geom class="target_slider" name="target"/>-->
+<!--            <site name="target_sensor_zone" pos="0. 0. 0.07" size=".03 .01 .01" type="ellipsoid"/>-->
+<!--        </body>-->
+
+    </worldbody>
+
+
+    <actuator>
+        <motor class="controlled_joint" joint="dynamixel_1" name="FLI"/>
+        <motor class="controlled_joint" joint="dynamixel_2" name="FLO"/>
+        <motor class="controlled_joint_reversed" joint="dynamixel_3" name="FRI"/>
+        <motor class="controlled_joint" joint="dynamixel_4" name="FRO"/>
+        <motor class="controlled_joint_reversed" joint="dynamixel_5" name="BLI"/>
+        <motor class="controlled_joint" joint="dynamixel_6" name="BLO"/>
+        <motor class="controlled_joint" joint="dynamixel_7" name="BRI"/>
+        <motor class="controlled_joint" joint="dynamixel_8" name="BRO" />
+        
+<!--        <motor class="controlled_joint" joint="FLx_limb" name="FLx" gear="-15"/>-->
+<!--        <motor class="controlled_joint" joint="FLy_limb" name="FLy" gear="15"/>-->
+<!--        <motor class="controlled_joint" joint="FRx_limb" name="FRx" gear="-15"/>-->
+<!--        <motor class="controlled_joint" joint="FRy_limb" name="FRy" gear="-15"/>-->
+<!--        <motor class="controlled_joint" joint="BLx_limb" name="BLx" gear="15"/>-->
+<!--        <motor class="controlled_joint" joint="BLy_limb" name="BLy" gear="15"/>-->
+<!--        <motor class="controlled_joint" joint="BRx_limb" name="BRx" gear="15"/>-->
+<!--        <motor class="controlled_joint" joint="BRy_limb" name="BRy" gear="-15"/>-->
+    </actuator>
+
+        <sensor>
+<!--            <actuatorpos actuator="FLI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorpos actuator="FLO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorpos actuator="FRI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorpos actuator="FRO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorpos actuator="BLI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorpos actuator="BLO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorpos actuator="BRI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorpos actuator="BRO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            -->
+<!--            <actuatorvel actuator="FLI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorvel actuator="FLO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorvel actuator="FRI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorvel actuator="FRO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorvel actuator="BLI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorvel actuator="BLO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorvel actuator="BRI" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            <actuatorvel actuator="BRO" noise="0"/>  <!--remember to x2 and modulus 360-->-->
+<!--            -->
+        <jointpos joint="dynamixel_1" noise="0"/>
+        <jointpos joint="dynamixel_2" noise="0"/>
+       <jointpos joint="dynamixel_3" noise="0"/>
+       <jointpos joint="dynamixel_4" noise="0"/>
+       <jointpos joint="dynamixel_5" noise="0"/>
+        <jointpos joint="dynamixel_6" noise="0"/>
+        <jointpos joint="dynamixel_7" noise="0"/>
+        <jointpos joint="dynamixel_8" noise="0"/>
+        
+        <jointvel joint="dynamixel_1" noise="0"/>
+        <jointvel joint="dynamixel_2" noise="0"/>
+       <jointvel joint="dynamixel_3" noise="0"/>
+       <jointvel joint="dynamixel_4" noise="0"/>
+       <jointvel joint="dynamixel_5" noise="0"/>
+        <jointvel joint="dynamixel_6" noise="0"/>
+        <jointvel joint="dynamixel_7" noise="0"/>
+        <jointvel joint="dynamixel_8" noise="0"/>
+
+        <framequat name="quatl" objname="lidar24" objtype="body" />
+
+        <rangefinder site="r0" noise="0" />
+        <rangefinder site="r1" noise="0" />
+        <rangefinder site="r2" noise="0" />
+        <rangefinder site="r3" noise="0" />
+        <rangefinder site="r4" noise="0" />
+        <rangefinder site="r5" noise="0" />
+        <rangefinder site="r6" noise="0" />
+        <rangefinder site="r7" noise="0" />
+        <rangefinder site="r8" noise="0" />
+        <rangefinder site="r9" noise="0" />
+        <rangefinder site="r10" noise="0" />
+        <rangefinder site="r11" noise="0" />
+        <rangefinder site="r12" noise="0" />
+        <rangefinder site="r13" noise="0" />
+        <rangefinder site="r14" noise="0" />
+        <rangefinder site="r15" noise="0" />
+        <rangefinder site="r16" noise="0" />
+        <rangefinder site="r17" noise="0" />
+        <rangefinder site="r18" noise="0" />
+        <rangefinder site="r19" noise="0" />
+        <rangefinder site="r20" noise="0" />
+        <rangefinder site="r21" noise="0" />
+        <rangefinder site="r22" noise="0" />
+        <rangefinder site="r23" noise="0" />
+        <rangefinder site="r24" noise="0" />
+        <rangefinder site="r25" noise="0" />
+        <rangefinder site="r26" noise="0" />
+        <rangefinder site="r27" noise="0" />
+        <rangefinder site="r28" noise="0" />
+        <rangefinder site="r29" noise="0" />
+        <rangefinder site="r30" noise="0" />
+        <rangefinder site="r31" noise="0" />
+        <rangefinder site="r32" noise="0" />
+        <rangefinder site="r33" noise="0" />
+        <rangefinder site="r34" noise="0" />
+        <rangefinder site="r35" noise="0" />
+        <rangefinder site="r36" noise="0" />
+        <rangefinder site="r37" noise="0" />
+        <rangefinder site="r38" noise="0" />
+        <rangefinder site="r39" noise="0" />
+        <rangefinder site="r40" noise="0" />
+        <rangefinder site="r41" noise="0" />
+        <rangefinder site="r42" noise="0" />
+        <rangefinder site="r43" noise="0" />
+        <rangefinder site="r44" noise="0" />
+        <rangefinder site="r45" noise="0" />
+        <rangefinder site="r46" noise="0" />
+        <rangefinder site="r47" noise="0" />
+        <rangefinder site="r48" noise="0" />
+        <rangefinder site="r49" noise="0" />
+        <rangefinder site="r50" noise="0" />
+        <rangefinder site="r51" noise="0" />
+        <rangefinder site="r52" noise="0" />
+        <rangefinder site="r53" noise="0" />
+        <rangefinder site="r54" noise="0" />
+        <rangefinder site="r55" noise="0" />
+        <rangefinder site="r56" noise="0" />
+        <rangefinder site="r57" noise="0" />
+        <rangefinder site="r58" noise="0" />
+        <rangefinder site="r59" noise="0" />
+        <rangefinder site="r60" noise="0" />
+        <rangefinder site="r61" noise="0" />
+        <rangefinder site="r62" noise="0" />
+        <rangefinder site="r63" noise="0" />
+        <rangefinder site="r64" noise="0" />
+        <rangefinder site="r65" noise="0" />
+        <rangefinder site="r66" noise="0" />
+        <rangefinder site="r67" noise="0" />
+        <rangefinder site="r68" noise="0" />
+        <rangefinder site="r69" noise="0" />
+        <rangefinder site="r70" noise="0" />
+        <rangefinder site="r71" noise="0" />
+        <rangefinder site="r72" noise="0" />
+        <rangefinder site="r73" noise="0" />
+        <rangefinder site="r74" noise="0" />
+        <rangefinder site="r75" noise="0" />
+        <rangefinder site="r76" noise="0" />
+        <rangefinder site="r77" noise="0" />
+        <rangefinder site="r78" noise="0" />
+        <rangefinder site="r79" noise="0" />
+        <rangefinder site="r80" noise="0" />
+        <rangefinder site="r81" noise="0" />
+        <rangefinder site="r82" noise="0" />
+        <rangefinder site="r83" noise="0" />
+        <rangefinder site="r84" noise="0" />
+        <rangefinder site="r85" noise="0" />
+        <rangefinder site="r86" noise="0" />
+        <rangefinder site="r87" noise="0" />
+        <rangefinder site="r88" noise="0" />
+        <rangefinder site="r89" noise="0" />
+        <rangefinder site="r90" noise="0" />
+        <rangefinder site="r91" noise="0" />
+        <rangefinder site="r92" noise="0" />
+        <rangefinder site="r93" noise="0" />
+        <rangefinder site="r94" noise="0" />
+        <rangefinder site="r95" noise="0" />
+        <rangefinder site="r96" noise="0" />
+        <rangefinder site="r97" noise="0" />
+        <rangefinder site="r98" noise="0" />
+        <rangefinder site="r99" noise="0" />
+        <rangefinder site="r100" noise="0" />
+        <rangefinder site="r101" noise="0" />
+        <rangefinder site="r102" noise="0" />
+        <rangefinder site="r103" noise="0" />
+        <rangefinder site="r104" noise="0" />
+        <rangefinder site="r105" noise="0" />
+        <rangefinder site="r106" noise="0" />
+        <rangefinder site="r107" noise="0" />
+        <rangefinder site="r108" noise="0" />
+        <rangefinder site="r109" noise="0" />
+        <rangefinder site="r110" noise="0" />
+        <rangefinder site="r111" noise="0" />
+        <rangefinder site="r112" noise="0" />
+        <rangefinder site="r113" noise="0" />
+        <rangefinder site="r114" noise="0" />
+        <rangefinder site="r115" noise="0" />
+        <rangefinder site="r116" noise="0" />
+        <rangefinder site="r117" noise="0" />
+        <rangefinder site="r118" noise="0" />
+        <rangefinder site="r119" noise="0" />
+        <rangefinder site="r120" noise="0" />
+        <rangefinder site="r121" noise="0" />
+        <rangefinder site="r122" noise="0" />
+        <rangefinder site="r123" noise="0" />
+        <rangefinder site="r124" noise="0" />
+        <rangefinder site="r125" noise="0" />
+        <rangefinder site="r126" noise="0" />
+        <rangefinder site="r127" noise="0" />
+        <rangefinder site="r128" noise="0" />
+        <rangefinder site="r129" noise="0" />
+        <rangefinder site="r130" noise="0" />
+        <rangefinder site="r131" noise="0" />
+        <rangefinder site="r132" noise="0" />
+        <rangefinder site="r133" noise="0" />
+        <rangefinder site="r134" noise="0" />
+        <rangefinder site="r135" noise="0" />
+        <rangefinder site="r136" noise="0" />
+        <rangefinder site="r137" noise="0" />
+        <rangefinder site="r138" noise="0" />
+        <rangefinder site="r139" noise="0" />
+        <rangefinder site="r140" noise="0" />
+        <rangefinder site="r141" noise="0" />
+        <rangefinder site="r142" noise="0" />
+        <rangefinder site="r143" noise="0" />
+        <rangefinder site="r144" noise="0" />
+        <rangefinder site="r145" noise="0" />
+        <rangefinder site="r146" noise="0" />
+        <rangefinder site="r147" noise="0" />
+        <rangefinder site="r148" noise="0" />
+        <rangefinder site="r149" noise="0" />
+        <rangefinder site="r150" noise="0" />
+        <rangefinder site="r151" noise="0" />
+        <rangefinder site="r152" noise="0" />
+        <rangefinder site="r153" noise="0" />
+        <rangefinder site="r154" noise="0" />
+        <rangefinder site="r155" noise="0" />
+        <rangefinder site="r156" noise="0" />
+        <rangefinder site="r157" noise="0" />
+        <rangefinder site="r158" noise="0" />
+        <rangefinder site="r159" noise="0" />
+        <rangefinder site="r160" noise="0" />
+        <rangefinder site="r161" noise="0" />
+        <rangefinder site="r162" noise="0" />
+        <rangefinder site="r163" noise="0" />
+        <rangefinder site="r164" noise="0" />
+        <rangefinder site="r165" noise="0" />
+        <rangefinder site="r166" noise="0" />
+        <rangefinder site="r167" noise="0" />
+        <rangefinder site="r168" noise="0" />
+        <rangefinder site="r169" noise="0" />
+        <rangefinder site="r170" noise="0" />
+        <rangefinder site="r171" noise="0" />
+        <rangefinder site="r172" noise="0" />
+        <rangefinder site="r173" noise="0" />
+        <rangefinder site="r174" noise="0" />
+        <rangefinder site="r175" noise="0" />
+        <rangefinder site="r176" noise="0" />
+        <rangefinder site="r177" noise="0" />
+        <rangefinder site="r178" noise="0" />
+        <rangefinder site="r179" noise="0" />
+        <rangefinder site="r180" noise="0" />
+        <rangefinder site="r181" noise="0" />
+        <rangefinder site="r182" noise="0" />
+        <rangefinder site="r183" noise="0" />
+        <rangefinder site="r184" noise="0" />
+        <rangefinder site="r185" noise="0" />
+        <rangefinder site="r186" noise="0" />
+        <rangefinder site="r187" noise="0" />
+        <rangefinder site="r188" noise="0" />
+        <rangefinder site="r189" noise="0" />
+        <rangefinder site="r190" noise="0" />
+        <rangefinder site="r191" noise="0" />
+        <rangefinder site="r192" noise="0" />
+        <rangefinder site="r193" noise="0" />
+        <rangefinder site="r194" noise="0" />
+        <rangefinder site="r195" noise="0" />
+        <rangefinder site="r196" noise="0" />
+        <rangefinder site="r197" noise="0" />
+        <rangefinder site="r198" noise="0" />
+        <rangefinder site="r199" noise="0" />
+        <rangefinder site="r200" noise="0" />
+        <rangefinder site="r201" noise="0" />
+        <rangefinder site="r202" noise="0" />
+        <rangefinder site="r203" noise="0" />
+        <rangefinder site="r204" noise="0" />
+        <rangefinder site="r205" noise="0" />
+        <rangefinder site="r206" noise="0" />
+        <rangefinder site="r207" noise="0" />
+        <rangefinder site="r208" noise="0" />
+        <rangefinder site="r209" noise="0" />
+        <rangefinder site="r210" noise="0" />
+        <rangefinder site="r211" noise="0" />
+        <rangefinder site="r212" noise="0" />
+        <rangefinder site="r213" noise="0" />
+        <rangefinder site="r214" noise="0" />
+        <rangefinder site="r215" noise="0" />
+        <rangefinder site="r216" noise="0" />
+        <rangefinder site="r217" noise="0" />
+        <rangefinder site="r218" noise="0" />
+        <rangefinder site="r219" noise="0" />
+        <rangefinder site="r220" noise="0" />
+        <rangefinder site="r221" noise="0" />
+        <rangefinder site="r222" noise="0" />
+        <rangefinder site="r223" noise="0" />
+        <rangefinder site="r224" noise="0" />
+        <rangefinder site="r225" noise="0" />
+        <rangefinder site="r226" noise="0" />
+        <rangefinder site="r227" noise="0" />
+        <rangefinder site="r228" noise="0" />
+        <rangefinder site="r229" noise="0" />
+        <rangefinder site="r230" noise="0" />
+        <rangefinder site="r231" noise="0" />
+        <rangefinder site="r232" noise="0" />
+        <rangefinder site="r233" noise="0" />
+        <rangefinder site="r234" noise="0" />
+        <rangefinder site="r235" noise="0" />
+        <rangefinder site="r236" noise="0" />
+        <rangefinder site="r237" noise="0" />
+        <rangefinder site="r238" noise="0" />
+        <rangefinder site="r239" noise="0" />
+        <rangefinder site="r240" noise="0" />
+        <rangefinder site="r241" noise="0" />
+        <rangefinder site="r242" noise="0" />
+        <rangefinder site="r243" noise="0" />
+        <rangefinder site="r244" noise="0" />
+        <rangefinder site="r245" noise="0" />
+        <rangefinder site="r246" noise="0" />
+        <rangefinder site="r247" noise="0" />
+        <rangefinder site="r248" noise="0" />
+        <rangefinder site="r249" noise="0" />
+        <rangefinder site="r250" noise="0" />
+        <rangefinder site="r251" noise="0" />
+        <rangefinder site="r252" noise="0" />
+        <rangefinder site="r253" noise="0" />
+        <rangefinder site="r254" noise="0" />
+        <rangefinder site="r255" noise="0" />
+        <rangefinder site="r256" noise="0" />
+        <rangefinder site="r257" noise="0" />
+        <rangefinder site="r258" noise="0" />
+        <rangefinder site="r259" noise="0" />
+        <rangefinder site="r260" noise="0" />
+        <rangefinder site="r261" noise="0" />
+        <rangefinder site="r262" noise="0" />
+        <rangefinder site="r263" noise="0" />
+        <rangefinder site="r264" noise="0" />
+        <rangefinder site="r265" noise="0" />
+        <rangefinder site="r266" noise="0" />
+        <rangefinder site="r267" noise="0" />
+        <rangefinder site="r268" noise="0" />
+        <rangefinder site="r269" noise="0" />
+        <rangefinder site="r270" noise="0" />
+        <rangefinder site="r271" noise="0" />
+        <rangefinder site="r272" noise="0" />
+        <rangefinder site="r273" noise="0" />
+        <rangefinder site="r274" noise="0" />
+        <rangefinder site="r275" noise="0" />
+        <rangefinder site="r276" noise="0" />
+        <rangefinder site="r277" noise="0" />
+        <rangefinder site="r278" noise="0" />
+        <rangefinder site="r279" noise="0" />
+        <rangefinder site="r280" noise="0" />
+        <rangefinder site="r281" noise="0" />
+        <rangefinder site="r282" noise="0" />
+        <rangefinder site="r283" noise="0" />
+        <rangefinder site="r284" noise="0" />
+        <rangefinder site="r285" noise="0" />
+        <rangefinder site="r286" noise="0" />
+        <rangefinder site="r287" noise="0" />
+        <rangefinder site="r288" noise="0" />
+        <rangefinder site="r289" noise="0" />
+        <rangefinder site="r290" noise="0" />
+        <rangefinder site="r291" noise="0" />
+        <rangefinder site="r292" noise="0" />
+        <rangefinder site="r293" noise="0" />
+        <rangefinder site="r294" noise="0" />
+        <rangefinder site="r295" noise="0" />
+        <rangefinder site="r296" noise="0" />
+        <rangefinder site="r297" noise="0" />
+        <rangefinder site="r298" noise="0" />
+        <rangefinder site="r299" noise="0" />
+        <rangefinder site="r300" noise="0" />
+        <rangefinder site="r301" noise="0" />
+        <rangefinder site="r302" noise="0" />
+        <rangefinder site="r303" noise="0" />
+        <rangefinder site="r304" noise="0" />
+        <rangefinder site="r305" noise="0" />
+        <rangefinder site="r306" noise="0" />
+        <rangefinder site="r307" noise="0" />
+        <rangefinder site="r308" noise="0" />
+        <rangefinder site="r309" noise="0" />
+        <rangefinder site="r310" noise="0" />
+        <rangefinder site="r311" noise="0" />
+        <rangefinder site="r312" noise="0" />
+        <rangefinder site="r313" noise="0" />
+        <rangefinder site="r314" noise="0" />
+        <rangefinder site="r315" noise="0" />
+        <rangefinder site="r316" noise="0" />
+        <rangefinder site="r317" noise="0" />
+        <rangefinder site="r318" noise="0" />
+        <rangefinder site="r319" noise="0" />
+        <rangefinder site="r320" noise="0" />
+        <rangefinder site="r321" noise="0" />
+        <rangefinder site="r322" noise="0" />
+        <rangefinder site="r323" noise="0" />
+        <rangefinder site="r324" noise="0" />
+        <rangefinder site="r325" noise="0" />
+        <rangefinder site="r326" noise="0" />
+        <rangefinder site="r327" noise="0" />
+        <rangefinder site="r328" noise="0" />
+        <rangefinder site="r329" noise="0" />
+        <rangefinder site="r330" noise="0" />
+        <rangefinder site="r331" noise="0" />
+        <rangefinder site="r332" noise="0" />
+        <rangefinder site="r333" noise="0" />
+        <rangefinder site="r334" noise="0" />
+        <rangefinder site="r335" noise="0" />
+        <rangefinder site="r336" noise="0" />
+        <rangefinder site="r337" noise="0" />
+        <rangefinder site="r338" noise="0" />
+        <rangefinder site="r339" noise="0" />
+        <rangefinder site="r340" noise="0" />
+        <rangefinder site="r341" noise="0" />
+        <rangefinder site="r342" noise="0" />
+        <rangefinder site="r343" noise="0" />
+        <rangefinder site="r344" noise="0" />
+        <rangefinder site="r345" noise="0" />
+        <rangefinder site="r346" noise="0" />
+        <rangefinder site="r347" noise="0" />
+        <rangefinder site="r348" noise="0" />
+        <rangefinder site="r349" noise="0" />
+        <rangefinder site="r350" noise="0" />
+        <rangefinder site="r351" noise="0" />
+        <rangefinder site="r352" noise="0" />
+        <rangefinder site="r353" noise="0" />
+        <rangefinder site="r354" noise="0" />
+        <rangefinder site="r355" noise="0" />
+        <rangefinder site="r356" noise="0" />
+        <rangefinder site="r357" noise="0" />
+        <rangefinder site="r358" noise="0" />
+        <rangefinder site="r359" noise="0" />
+    </sensor>
+
+
+
+</mujoco>

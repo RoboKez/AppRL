@@ -1,0 +1,76 @@
+<mujoco model="cartpole_sim_outer">
+    <compiler inertiafromgeom="true" angle="degree"/>
+    
+    <asset>
+      <texture type="skybox" builtin="gradient" rgb1=".0 .0 .0" rgb2="0. 0.0 .1" width="512" height="512"/>
+      <texture name="body" type="cube" builtin="flat" mark="cross" width="127" height="1278"
+               rgb1="0.4 0.4 0.4" rgb2="0.4 0.4 0.4" markrgb="0 0 0" random="0.01"/>
+      <material name="body" texture="body" texuniform="true"/>
+      <texture name="grid" type="2d" builtin="checker" width="512" height="512" rgb1=".6 .6 .6" rgb2=".9 .9 .9"/>
+      <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance=".2"/>
+    </asset>
+
+    <default>
+        <joint limited="false" damping="1" armature="0"/>
+        <geom type="capsule" condim="1" friction=".7" solimp=".9 .99 .003" solref=".015 1" material="body"/>
+        <motor ctrlrange="-1. 1." ctrllimited="true"/>
+
+        <default class="bearing">
+            <joint pos="0 0 0" limited="false" damping="0.01" armature="0.01" type="hinge" axis="0 1 0"/>
+            <geom pos="0 0 0" conaffinity="0" rgba="1 0 1 0.7" friction="0 0 0"/>
+        </default>
+
+        <default class="target_slider">
+            <joint armature="10000" damping="10000" limited="true" pos="0 0 0" range="-1000 1000" ref=".1" stiffness="0" type="slide"/>
+            <geom conaffinity="0" pos="0 0 0" rgba=" 1 0 1 0.5" size="0.005" type="sphere"/>
+        </default>
+
+    </default>
+
+    <option timestep="0.005" iterations="50" tolerance="1e-10" solver="Newton" jacobian="dense" cone="pyramidal"/>
+
+    <visual>
+      <map force="0.1" zfar="30"/>
+      <rgba haze="0.15 0.25 0.35 .1"/>
+      <quality shadowsize="4096"/>
+      <global offwidth="800" offheight="800"/>
+    </visual>
+
+    <worldbody>
+        <geom name="floor" size="0 0 .05" type="plane" material="grid" condim="3"/>
+        <light name="spotlight" mode="targetbodycom" target="torso"
+               diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 -20 4" cutoff="10"/>
+
+        <light directional="false" diffuse=".2 .2 .2" specular="0 0 0" pos="0 0 5" dir="0 0 -1" castshadow="false"/>
+        <light mode="targetbodycom" target="torso" directional="false" diffuse=".8 .8 .8" specular="0.3 0.3 0.3" pos="0 0 4.0" dir="0 0 -1"/>
+
+        <body name="torso" pos="0 0 1.">
+            <camera name="trackhorizontal" mode="trackcom" pos="0 -3 0.3" xyaxes="1 0 0 0 0 1"/>
+            <joint type="slide" axis="1 0 0" name="cart" damping="10" armature="0.1" limited="false" range="-5 5"/>
+            <geom type="box" size="0.15 0.015 0.015"/>
+            <body name="lwaist" pos="0 -0.05 0">
+                    <joint class="bearing" pos="0 0 0" axis="0 1 0" name="pole" limited="false" range="-45 45"/>
+                    <geom class="bearing" pos="0 0 0.2" size="0.01 0.2" type="capsule" rgba="1 0 1 0.7" />
+                    <body name="ball" pos="0 0 0.4">
+                        <joint class="target_slider" axis="1 0 0" name="target_x"/>
+                        <geom class="target_slider" name="target" size="0.02"/>
+                        <site name="target_sensor_zone" rgba="1 0 1 0.7" size="0.01" type="sphere"/>
+                    </body>
+            </body>
+
+        </body>
+    </worldbody>
+
+    <actuator>
+        <motor name="motor1" gear="40" joint="cart" />
+    </actuator>
+
+    <sensor>
+        <jointpos joint="pole" noise="0"/>
+        <jointvel joint="pole" noise="0"/>
+        <jointvel joint="cart" noise="0"/>
+        <jointpos joint="cart" noise="0"/>
+    </sensor>
+
+</mujoco>
+

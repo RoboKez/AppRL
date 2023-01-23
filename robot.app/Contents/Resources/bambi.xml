@@ -1,0 +1,173 @@
+<!-- Title: bambi_stump_retired.xml-->
+<!-- Description: A joint velocity controlled four legged robot on a flat plane with variable target destination-->
+<!-- Author: Kez Smithson Whitehead, based default parameters from humanoid.xml-->
+<!-- Last Updated: September 2020-->
+
+<mujoco model="Bambi with Humanoid parameters">
+
+    <compiler angle="degree" inertiafromgeom="true" coordinate="local"/>
+    <option integrator="Euler" solver="Newton" gravity="0 0 -9.81" timestep="0.01"/>
+    <size nkey="5" nuser_geom="1"/>
+
+    <default>
+
+        <default class="controlled_joint">
+            <motor gear="20" ctrllimited="true" ctrlrange="-1 1"/>
+            <joint armature="0.02" damping="5" pos="0 0 0" limited="true" type="hinge"/>
+            <geom conaffinity="1" condim="1" contype="1" margin="0.001" material="geom" pos="0 0 0" type="mesh" rgba="1 0 0 1"/>
+        </default>
+        
+
+        <default class="controlled_joint_reversed">
+            <motor gear="-20" ctrllimited="true" ctrlrange="-1 1"/>
+        </default>
+
+        <default class="tactile_sensor">
+            <geom size=".02" type="sphere" pos="0. 0. -.15" rgba="0. 0. 0. 1."/>
+            <site size=".021" type="sphere" pos="0. 0. -.15" rgba="0. 0. 0. .5"/>
+        </default>
+
+        <default class="target_slider">
+            <joint armature="0" damping="0" limited="true" pos="0 0 0" range="-1000 1000" ref=".1" stiffness="0" type="slide"/>
+            <geom conaffinity="0" contype="0" pos="0 0 1" rgba="0 1 0 0.5" size="0.05 1" type="cylinder"/>
+        </default>
+
+    </default>
+
+    <asset>
+        <texture builtin="gradient" height="100" rgb1=".2 .3 .4" rgb2="0 0 0" type="skybox" width="100"/>
+        <texture builtin="flat" height="1278" mark="cross" markrgb="1 1 1" name="texgeom" random="0.01" rgb1="0.8 0.6 0.4" rgb2="0.8 0.6 0.4" type="cube" width="127"/>
+        <texture builtin="checker" height="100" name="texplane" rgb1="0 0 0" rgb2="0.8 0.8 0.8" type="2d" width="100"/>
+        <material name="MatPlane" reflectance="0.5" shininess="1" specular="1" texrepeat="60 60" texture="texplane"/>
+        <material name="geom" texture="texgeom" texuniform="true"/>
+
+        <mesh name="dynamixel" file="dynamixel.stl" scale="0.002 0.002 0.002"/>
+        <mesh name="torso" file="b3_torso.stl" scale="0.0001 0.0001 0.0001"/>
+        <mesh name="hip" file="hip.stl" scale="0.002 0.002 0.002"/>
+        <mesh name="knee" file="b3_stump.stl" scale="0.0002 0.0002 0.0002"/>
+    </asset>
+
+    <worldbody>
+        <light cutoff="100" diffuse="1 1 1" dir="-0 0 -1.3" directional="true" exponent="1" pos="0 0 1.3" specular=".1 .1 .1"/>
+        <geom condim="3" friction="1 .1 .1" material="MatPlane" name="floor" pos="0 0 0" rgba="0 0.9 0.8 1" size="20 20 0.125" type="plane"/>
+
+<!-- /////////////////////////////////////////Robot //////////////////////////////////////////////-->
+
+
+
+<!--Torso-->
+         <body name="torso" pos="0 0 0.205" euler="0 0 90">
+            <camera name="eye" pos="0. 0 .1" euler="90 0 0" mode="fixed"/>
+            <joint armature="0" damping="0" limited="false" name="root_1" pos="0 0 0" stiffness="0" type="free"/>
+            <site name="torso_sensor_zone" pos="0. 0. 0." size=".01 .03 .01" type="ellipsoid"/>
+            <site name="high_torso_sensor_zone" pos="0. 0. 0.1" size=".01 .03 .01" type="ellipsoid"/>
+            <site name="head" pos=".0 0.1 0.0" size=".01 .03 .01" type="ellipsoid" rgba="0 0 0 1"/>
+            <geom name="aluminium_plate" pos="0 0 0" size=".1 0.075 0.005" type="box" rgba="0 0 1 0.7"/>
+            <geom name="FR_motor" pos="0.078 -0.044 -0.033" type="mesh" mesh="dynamixel" euler="180 0 90"/>
+            <geom name="BR_motor" pos="-0.078 -0.044 -0.033" type="mesh" mesh="dynamixel" euler="180 180 90"/>
+            <geom name="FL_motor" pos="0.078 0.044 -0.033" type="mesh" mesh="dynamixel" euler="0 0 90"/>
+            <geom name="BL_motor" pos="-0.078 0.044 -0.033" type="mesh" mesh="dynamixel" euler="0 180 90"/>
+
+            <body name = "hipFL"  pos="-0.078 0.0775 -0.033" euler="0 0 90">
+                <joint class="controlled_joint" name="dynamixel_1" axis="1 0 0" range="0 30"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeLF" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_2" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="L_touch_zone"/>
+                </body>
+            </body>
+
+             <body name = "hipFR"  pos="0.078 0.0775 -0.033" euler="0 0 90">
+                <joint class="controlled_joint" name="dynamixel_3" axis="1 0 0" range="-30 0"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeFR" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_4" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="R_touch_zone"/>
+                </body>
+            </body>
+
+             <body name = "hipBL"  pos="-0.078 -0.0775 -0.033" euler="0 0 -90">
+                <joint class="controlled_joint" name="dynamixel_5" axis="1 0 0" range="-30 0"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeBL" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_6" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="L_touch_zone_rear"/>
+                </body>
+            </body>
+
+             <body name = "hipBR"  pos="0.078 -0.0775 -0.033" euler="0 0 -90">
+                <joint class="controlled_joint" name="dynamixel_7" axis="1 0 0" range="0 30"/>
+                <geom class="controlled_joint" type="mesh" mesh="hip" />
+                <body name = "kneeBR" pos="0.085 0 0" euler="0 0 180">
+                    <joint class="controlled_joint" name="dynamixel_8" axis="0 1 0" range="0 30"/>
+                    <geom pos="0 0 0" type="mesh" mesh="knee" />
+                    <geom  class="tactile_sensor"/>
+                    <site  class="tactile_sensor" name="R_touch_zone_rear"/>
+                </body>
+            </body>
+
+        </body>
+
+        <!-- Target -->
+        <body name="target" pos="0 0 0">
+            <joint class="target_slider" axis="1 0 0" name="target_x"/>
+            <joint class="target_slider" axis="0 1 0" name="target_y"/>
+            <geom class="target_slider" name="target"/>
+            <site name="target_sensor_zone" pos="0. 0. 0.07" size=".03 .01 .01" type="ellipsoid"/>
+        </body>
+
+    </worldbody>
+
+    <actuator>
+        <motor class="controlled_joint" joint="dynamixel_1" name="FLI"/>
+        <motor class="controlled_joint" joint="dynamixel_2" name="FLO"/>
+        <motor class="controlled_joint_reversed" joint="dynamixel_3" name="FRI"/>
+        <motor class="controlled_joint" joint="dynamixel_4" name="FRO"/>
+        <motor class="controlled_joint_reversed" joint="dynamixel_5" name="BLI"/>
+        <motor class="controlled_joint" joint="dynamixel_6" name="BLO"/>
+        <motor class="controlled_joint" joint="dynamixel_7" name="BRI"/>
+        <motor class="controlled_joint" joint="dynamixel_8" name="BRO" />
+    </actuator>
+
+    <sensor>
+
+        <framepos objtype="site"  objname="torso_sensor_zone"  noise="0"/>
+        <framepos objtype="site"  objname="target_sensor_zone"  noise="0"/>
+        <framepos objtype="site"  objname="head"  noise="0"/>
+
+        <actuatorpos actuator="FLI" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="FLO" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="FRI" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="FRO" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="BLI" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="BLO" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="BRI" noise="0"/>  <!--remember to x2 and modulus 360-->
+        <actuatorpos actuator="BRO" noise="0"/>  <!--remember to x2 and modulus 360-->
+
+        <framepos objtype="site"  objname="high_torso_sensor_zone"  noise="0"/>
+        <framequat objtype="site"  objname="torso_sensor_zone"  noise="0"/>
+
+        <touch site="R_touch_zone" noise="0"/>
+        <touch site="L_touch_zone"  noise="0"/>
+        <touch site="R_touch_zone_rear" noise="0"/>
+        <touch site="L_touch_zone_rear"  noise="0"/>
+
+        <actuatorvel actuator="FLI" noise="0"/>
+        <actuatorvel actuator="FLO" noise="0"/>
+        <actuatorvel actuator="FRI" noise="0"/>
+        <actuatorvel actuator="FRO" noise="0"/>
+        <actuatorvel actuator="BLI" noise="0"/>
+        <actuatorvel actuator="BLO" noise="0"/>
+        <actuatorvel actuator="BRI" noise="0"/>
+        <actuatorvel actuator="BRO" noise="0"/>
+
+<!--        <rangefinder name="distance_sensor" site="distance_sensor" />-->
+    </sensor> -->
+
+</mujoco>
